@@ -32,6 +32,8 @@ target_include_directories(simdis_3rd_party
   $<INSTALL_INTERFACE:include/simdis_3rd_party/GLEW>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/GDAL/3.4.3/include>
   $<INSTALL_INTERFACE:include/simdis_3rd_party/GDAL>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/protobuf/3.14.0/include>
+  $<INSTALL_INTERFACE:include/simdis_3rd_party/protobuf>
 )
 
 target_link_libraries(simdis_3rd_party
@@ -143,6 +145,11 @@ file(GLOB GLEW_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/GDAL/3.4.3/inc
 install(FILES
   ${GLEW_HEADERS}
   DESTINATION include/simdis_3rd_party/GDAL
+)
+
+install(DIRECTORY
+  "${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/protobuf/3.14.0/include/google"
+  DESTINATION include/simdis_3rd_party/protobuf
 )
 
 install(FILES
