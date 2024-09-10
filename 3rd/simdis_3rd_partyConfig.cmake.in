@@ -1,0 +1,5 @@
+@PACKAGE_INIT@
+
+include("${CMAKE_CURRENT_LIST_DIR}/simdis_3rd_partyTargets.cmake")
+
+check_required_components(simdis_3rd_party)

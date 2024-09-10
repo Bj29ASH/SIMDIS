@@ -78,3 +78,5 @@ install(FILES
   "${CMAKE_CURRENT_BINARY_DIR}/simdisConfig.cmake"
   DESTINATION share/simdis
 )
+
+add_subdirectory(3rd)
