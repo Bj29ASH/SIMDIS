@@ -10,12 +10,16 @@ target_link_directories(simdis_3rd_party
   INTERFACE
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/OpenSceneGraph/3.6.5/lib>
   $<INSTALL_INTERFACE:lib/simdis_3rd_party/OpenSceneGraph>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/osgEarth/OSG-3.6.5/lib>
+  $<INSTALL_INTERFACE:lib/simdis_3rd_party/osgEarth>
 )
 
 target_include_directories(simdis_3rd_party
   INTERFACE
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/OpenSceneGraph/3.6.5/include>
   $<INSTALL_INTERFACE:include/simdis_3rd_party/OpenSceneGraph>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/osgEarth/OSG-3.6.5/include>
+  $<INSTALL_INTERFACE:include/simdis_3rd_party/osgEarth>
 )
 
 target_link_libraries(simdis_3rd_party
@@ -54,6 +58,12 @@ target_link_libraries(simdis_3rd_party
   $<INSTALL_INTERFACE:osgVolume.lib>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/OpenSceneGraph/3.6.5/lib/osgWidget.lib>
   $<INSTALL_INTERFACE:osgWidget.lib>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/osgEarth/OSG-3.6.5/lib/osgEarth.lib>
+  $<INSTALL_INTERFACE:osgEarth.lib>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/osgEarth/OSG-3.6.5/lib/osgEarthSilverLining.lib>
+  $<INSTALL_INTERFACE:osgEarthSilverLining.lib>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/osgEarth/OSG-3.6.5/lib/osgEarthTriton.lib>
+  $<INSTALL_INTERFACE:osgEarthTriton.lib>
 )
 
 include(CMakePackageConfigHelpers)
@@ -93,6 +103,14 @@ install(DIRECTORY
   DESTINATION include/simdis_3rd_party/OpenSceneGraph
 )
 
+install(DIRECTORY
+  "${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/osgEarth/OSG-3.6.5/include/osgEarth"
+  "${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/osgEarth/OSG-3.6.5/include/osgEarthDrivers"
+  "${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/osgEarth/OSG-3.6.5/include/osgEarthSilverLining"
+  "${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/osgEarth/OSG-3.6.5/include/osgEarthTriton"
+  DESTINATION include/simdis_3rd_party/osgEarth
+)
+
 install(FILES
   "${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/OpenSceneGraph/3.6.5/lib/OpenThreads.lib"
   "${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/OpenSceneGraph/3.6.5/lib/osg.lib"
@@ -115,8 +133,20 @@ install(FILES
   DESTINATION lib/simdis_3rd_party/OpenSceneGraph
 )
 
+install(FILES
+  "${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/osgEarth/OSG-3.6.5/lib/osgEarth.lib"
+  "${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/osgEarth/OSG-3.6.5/lib/osgEarthSilverLining.lib"
+  "${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/osgEarth/OSG-3.6.5/lib/osgEarthTriton.lib"
+  DESTINATION lib/simdis_3rd_party/osgEarth
+)
+
 install(DIRECTORY
   "${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/OpenSceneGraph/3.6.5/bin"
+  DESTINATION /
+)
+
+install(DIRECTORY
+  "${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/osgEarth/OSG-3.6.5/bin"
   DESTINATION /
 )
 
