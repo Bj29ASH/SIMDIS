@@ -216,6 +216,12 @@ install(DIRECTORY
   DESTINATION /
 )
 
+file(GLOB MrSID_DSDK_BIN
+  "${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/MrSID_DSDK/9.5.4.4709/Lidar_DSDK/lib/*.dll"
+  "${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/MrSID_DSDK/9.5.4.4709/Raster_DSDK/lib/*.dll"
+)
+install(FILES ${MrSID_DSDK_BIN} DESTINATION bin)
+
 install(
   EXPORT simdis_3rd_partyTargets
   DESTINATION share/simdis_3rd_party
