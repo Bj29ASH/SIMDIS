@@ -16,6 +16,8 @@ target_link_directories(simdis_3rd_party
   $<INSTALL_INTERFACE:lib/simdis_3rd_party/osgQt>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/GLEW/2.1.0/lib>
   $<INSTALL_INTERFACE:lib/simdis_3rd_party/GLEW>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/GDAL/3.4.3/lib>
+  $<INSTALL_INTERFACE:lib/simdis_3rd_party/GDAL>
 )
 
 target_include_directories(simdis_3rd_party
@@ -28,6 +30,8 @@ target_include_directories(simdis_3rd_party
   $<INSTALL_INTERFACE:include/simdis_3rd_party/osgQt>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/GLEW/2.1.0/include>
   $<INSTALL_INTERFACE:include/simdis_3rd_party/GLEW>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/GDAL/3.4.3/include>
+  $<INSTALL_INTERFACE:include/simdis_3rd_party/GDAL>
 )
 
 target_link_libraries(simdis_3rd_party
@@ -76,6 +80,8 @@ target_link_libraries(simdis_3rd_party
   $<INSTALL_INTERFACE:osgQt5.lib>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/GLEW/2.1.0/lib/GLEW.lib>
   $<INSTALL_INTERFACE:GLEW.lib>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/GDAL/3.4..3/lib/gdal304.lib>
+  $<INSTALL_INTERFACE:gdal304.lib>
 )
 
 include(CMakePackageConfigHelpers)
@@ -133,6 +139,12 @@ install(DIRECTORY
   DESTINATION include/simdis_3rd_party/GLEW
 )
 
+file(GLOB GLEW_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/GDAL/3.4.3/include/*.h")
+install(FILES
+  ${GLEW_HEADERS}
+  DESTINATION include/simdis_3rd_party/GDAL
+)
+
 install(FILES
   "${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/OpenSceneGraph/3.6.5/lib/OpenThreads.lib"
   "${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/OpenSceneGraph/3.6.5/lib/osg.lib"
@@ -172,6 +184,11 @@ install(FILES
   DESTINATION lib/simdis_3rd_party/GLEW
 )
 
+install(FILES
+  "${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/GDAL/3.4.3/lib/gdal304.lib"
+  DESTINATION lib/simdis_3rd_party/GDAL
+)
+
 install(DIRECTORY
   "${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/OpenSceneGraph/3.6.5/bin"
   DESTINATION /
@@ -184,6 +201,11 @@ install(DIRECTORY
 
 install(DIRECTORY
   "${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/osgQt/3.6.5/bin"
+  DESTINATION /
+)
+
+install(DIRECTORY
+  "${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/GDAL/3.4.3/bin"
   DESTINATION /
 )
 
