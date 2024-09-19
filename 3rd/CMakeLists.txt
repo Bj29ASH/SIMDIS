@@ -66,6 +66,8 @@ target_link_libraries(simdis_3rd_party
   $<INSTALL_INTERFACE:osgText.lib>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/OpenSceneGraph/3.6.5/lib/osgUI.lib>
   $<INSTALL_INTERFACE:osgUI.lib>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/OpenSceneGraph/3.6.5/lib/osgUtil.lib>
+  $<INSTALL_INTERFACE:osgUtil.lib>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/OpenSceneGraph/3.6.5/lib/osgViewer.lib>
   $<INSTALL_INTERFACE:osgViewer.lib>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/OpenSceneGraph/3.6.5/lib/osgVolume.lib>
