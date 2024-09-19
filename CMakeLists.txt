@@ -68,6 +68,8 @@ install(FILES
   DESTINATION lib/simdis
 )
 
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/bin DESTINATION /)
+
 install(
   EXPORT simdisTargets
   DESTINATION share/simdis
