@@ -1,0 +1,9 @@
+start
+extrude true
+altitudeMode relativeToGround
+poly
+ll 22.16  -159.6  1200
+ll 22.165 -159.55 1200
+ll 22.16  -159.5  1200
+end
+

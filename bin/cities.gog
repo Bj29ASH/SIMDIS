@@ -1,0 +1,514 @@
+comment World Cities from Information Almanac 1994
+comment
+start
+annotation	.Aberdeen,Scotland
+ll	57.15000	-2.15000
+annotation	.Adelaide,Australia
+ll	-34.91667	138.60000
+annotation	.Algiers
+ll	36.83333	3.00000
+annotation	.Amsterdam
+ll	52.36667	4.88333
+annotation	.Ankara,Turkey
+ll	39.91667	32.91667
+annotation	.Asuncion,Paraguay
+ll	-25.25000	-57.66667
+annotation	.Athens,Greece
+ll	37.96667	23.71667
+annotation	.Auckland,NewZealand
+ll	-36.86667	174.75000
+annotation	.Bangkok,Thailand
+ll	13.75000	100.50000
+annotation	.Barcelona,Spain
+ll	41.38333	2.15000
+annotation	.Beijing,China
+ll	39.91667	116.41667
+annotation	.Belem,Brazil
+ll	-1.46667	-48.48333
+annotation	.Belfast
+ll	54.61667	-5.93333
+annotation	.Belgrade
+ll	44.86667	20.53333
+annotation	.Berlin
+ll	52.50000	13.41667
+annotation	.Birmingham,England
+ll	52.41667	-1.91667
+annotation	.Bogota,Columbia
+ll	4.53333	-74.25000
+annotation	.Bombay
+ll	19.00000	72.80000
+annotation	.Bordeaux,France
+ll	44.83333	-0.51667
+annotation	.Bremen,Germany
+ll	53.08333	8.81667
+annotation	.Brisbane,Australia
+ll	-27.48333	153.13333
+annotation	.Bristol,England
+ll	51.46667	-2.58333
+annotation	.Brussels
+ll	50.86667	4.36667
+annotation	.Bucharest
+ll	44.41667	26.11667
+annotation	.Budapest
+ll	47.50000	19.08333
+annotation	.BuenosAires
+ll	-34.58333	-58.36667
+annotation	.Cairo
+ll	30.03333	31.35000
+annotation	.Calcutta
+ll	22.56667	88.40000
+annotation	.Canton,China
+ll	23.11667	113.25000
+annotation	.CapeTown,SouthAfrica
+ll	-33.91667	18.36667
+annotation	.Caracas,Venezuela
+ll	10.46667	-67.03333
+annotation	.Cayenne,FrenchGuiana
+ll	4.81667	-52.30000
+annotation	.Chihuahua,Mexico
+ll	28.61667	-106.08333
+annotation	.Chongquig,China
+ll	29.76667	106.56667
+annotation	.Copenhagen
+ll	55.66667	12.56667
+annotation	.Cordoba,Argentina
+ll	-31.46667	-64.16667
+annotation	.Dakar,Senegal
+ll	14.66667	-17.46667
+annotation	.Darwin,Australia
+ll	-12.46667	130.85000
+annotation	.Djibouti
+ll	11.50000	43.05000
+annotation	.Dublin
+ll	53.33333	-6.25000
+annotation	.Durban,SouthAfrica
+ll	-29.88333	30.88333
+annotation	.Edinburgh,Scotland
+ll	55.91667	-3.16667
+annotation	.Frankfurt
+ll	50.11667	8.68333
+annotation	.Georgetown,Guyana
+ll	6.75000	-58.08333
+annotation	.Glasgow,Scotland
+ll	55.83333	-4.25000
+annotation	.GuatemalaCity
+ll	14.61667	-90.51667
+annotation	.Guayaquil,Ecuador
+ll	-2.16667	-79.93333
+annotation	.Hamburg
+ll	53.55000	10.03333
+annotation	.Hammerfest,Norway
+ll	70.63333	23.63333
+annotation	.Havana
+ll	23.13333	-82.38333
+end
+start
+annotation	.Helsinki,Finland
+ll	60.16667	25.00000
+annotation	.Hobart,Tasmania
+ll	-42.86667	147.31667
+annotation	.Iquique,Chile
+ll	-20.16667	-70.11667
+annotation	.Irkutsk,Russia
+ll	52.50000	104.33333
+annotation	.Islamabad,Pakistan
+ll	32.2667	71.9167
+annotation	.Jakarta,Indonesia
+ll	-6.26667	106.80000
+annotation	.Johannesburg,SouthAfrica
+ll	-26.20000	28.06667
+annotation  .Kabul,Afghanistan
+ll	34.5167	69.1833
+annotation  .Kandahar,Afghanistan
+ll	31.6167	65.7167
+annotation	.Kingston,Jamaica
+ll	17.98333	-76.81667
+annotation	.Kinshasa,Zaire
+ll	-4.30000	15.28333
+annotation	.LaPaz,Bolivia
+ll	-16.45000	-68.36667
+annotation	.Leeds,England
+ll	53.75000	-1.50000
+annotation	.Lima,Peru
+ll	-12.00000	-77.03333
+annotation	.Lisbon
+ll	38.73333	-9.15000
+annotation	.Liverpool
+ll	53.41667	-3.00000
+annotation	.London
+ll	51.53333	-0.08333
+annotation	.Lyons,France
+ll	45.75000	4.83333
+annotation	.Madrid
+ll	40.43333	-3.70000
+annotation	.Manchester,England
+ll	53.50000	-2.25000
+annotation	.Manila
+ll	14.58333	120.95000
+annotation	.Marseilles,France
+ll	43.33333	5.33333
+annotation	.Mazatlan,Mexico
+ll	23.20000	-106.41667
+annotation	.Mecca,SaudiArabia
+ll	21.48333	39.75000
+annotation	.Melbourne
+ll	-37.78333	144.96667
+annotation	.MexicoCity
+ll	19.43333	-99.11667
+annotation	.Milan,Italy
+ll	45.45000	9.16667
+annotation	.Montevideo,Uruguay
+ll	-34.88333	-56.16667
+annotation	.Moscow
+ll	55.75000	37.60000
+annotation	.Munich,Germany
+ll	48.13333	11.58333
+annotation	.Nagasaki,Japan
+ll	32.80000	129.95000
+annotation	.Nagoya,Japan
+ll	35.11667	136.93333
+annotation	.Nairobi,Kenya
+ll	-1.41667	36.91667
+annotation	.Nanjing,China
+ll	32.05000	118.88333
+annotation	.Naples,Italy
+ll	40.83333	14.25000
+annotation	.Newcastle-on-Tyne,England
+ll	54.96667	-1.61667
+annotation	.Odessa,Ukraine
+ll	46.45000	30.80000
+annotation	.Osaka
+ll	34.53333	135.50000
+annotation	.Oslo
+ll	59.95000	10.70000
+annotation	.PanamaCity
+ll	8.96667	-79.53333
+annotation	.Paramaribo,Surinam
+ll	5.75000	-55.25000
+annotation	.Paris
+ll	48.80000	2.33333
+annotation	.Perth,Australia
+ll	-31.95000	115.86667
+annotation	.Plymount,England
+ll	50.41667	-4.08333
+annotation	.PortMoresby,PapuaNewGuinea
+ll	-9.41667	147.13333
+annotation	.Prague
+ll	50.08333	14.43333
+annotation	.Reykjavik,Iceland
+ll	64.06667	-21.96667
+annotation	.RiodeJaneiro
+ll	-22.95000	-43.20000
+annotation	.Rome
+ll	41.90000	12.45000
+annotation	.Salvador,Brazil
+ll	-12.93333	-38.45000
+annotation	.Santiago,Chile
+ll	-33.46667	-70.75000
+annotation	.StPetersburg
+ll	58.93333	30.30000
+end
+start
+annotation	.SaoPaulo,Brazil
+ll	-23.51667	-46.51667
+annotation	.Shanghai,China
+ll	31.16667	121.46667
+annotation	.Singapore
+ll	1.23333	103.91667
+annotation	.Sofia,Bulgaria
+ll	42.66667	23.03333
+annotation	.Stockholm
+ll	59.28333	18.05000
+annotation	.Sydney,Australia
+ll	-34.00000	151.00000
+annotation	.Tananarive,Madagascar
+ll	-18.83333	47.55000
+annotation	.Teheran,Iran
+ll	35.75000	51.75000
+annotation	.Tokyo
+ll	35.66667	139.75000
+annotation	.Tripoli,Libya
+ll	32.95000	13.20000
+annotation	.Venice
+ll	45.43333	12.33333
+annotation	.Veracruz,Mexico
+ll	19.16667	-96.16667
+annotation	.Vienna
+ll	48.23333	16.33333
+annotation	.Vladivostok,Russia
+ll	43.16667	132.00000
+annotation	.Warsaw
+ll	52.23333	21.00000
+annotation	.Wellington,NewZealand
+ll	-41.28333	174.78333
+annotation	.Yangon,Myanmar
+ll	16.83333	96.00000
+annotation	.Zurich
+ll	47.35000	8.51667
+end
+comment -------- US --------
+start
+annotation	.Albany,NY
+ll	42.66667	-73.75000
+annotation	.Albuquerque,NM
+ll	35.08333	-106.65000
+annotation	.Amarillo,TX
+ll	35.18333	-101.83333
+annotation	.Anchorage,AK
+ll	61.21667	-149.90000
+annotation	.Atlanta,GA
+ll	33.75000	-84.38333
+annotation	.Austin,TX
+ll	30.26667	-97.73333
+annotation	.Baker,OR
+ll	44.78333	-117.83333
+annotation	.Baltimore,MD
+ll	39.30000	-76.63333
+annotation	.Bangor,ME
+ll	44.80000	-68.78333
+annotation	.Birmingham,AL
+ll	33.50000	-86.83333
+annotation	.Bismark,ND
+ll	46.80000	-100.78333
+annotation	.Boise,ID
+ll	43.60000	-116.21667
+annotation	.Boston,MA
+ll	42.35000	-71.08333
+annotation	.Buffalo,NY
+ll	42.91667	-78.83333
+annotation	.Carlsbad,NM
+ll	32.43333	-104.25000
+annotation	.Charleston,SC
+ll	32.78333	-79.93333
+annotation	.Charleston,WV
+ll	38.35000	-81.63333
+annotation	.Charlotte,NC
+ll	35.23333	-80.83333
+annotation	.Cheyenne,WY
+ll	41.15000	-104.86667
+annotation	.Chicago,IL
+ll	41.83333	-87.61667
+annotation	.Cincinnati,OH
+ll	39.13333	-84.50000
+annotation	.Cleveland,OH
+ll	41.46667	-81.61667
+annotation	.Columbia,SC
+ll	34.00000	-81.03333
+annotation	.Columbus,OH
+ll	40.00000	-83.01667
+annotation	.Dallas,TX
+ll	32.76667	-96.76667
+annotation	.Denver,CO
+ll	39.75000	-105.00000
+annotation	.DesMoines,IA
+ll	41.58333	-93.61667
+annotation	.Detroit,MI
+ll	42.33333	-83.05000
+annotation	.Dubuque,IA
+ll	42.51667	-90.66667
+end
+start
+annotation	.Duluth,MN
+ll	46.81667	-92.08333
+annotation	.Eastport,ME
+ll	44.90000	-67.00000
+annotation	.ElCentro,CA
+ll	32.63333	-115.55000
+annotation	.ElPaso,TX
+ll	31.76667	-106.48333
+annotation	.Eugene,OR
+ll	44.05000	-123.08333
+annotation	.Fargo,ND
+ll	46.86667	-96.80000
+annotation	.Flagstaff,AZ
+ll	35.21667	-111.68333
+annotation	.FortWorth,TX
+ll	32.71667	-97.31667
+annotation	.Fresno,CA
+ll	36.73333	-119.80000
+annotation	.GrandJunction,CO
+ll	39.08333	-108.55000
+annotation	.GrandRapids,MI
+ll	42.96667	-85.66667
+annotation	.Havre,MT
+ll	48.55000	-109.71667
+annotation	.Helena,MT
+ll	46.58333	-112.03333
+annotation	.Honolulu,HI
+ll	21.30000	-157.83333
+annotation	.HotSprings,AR
+ll	34.51667	-93.05000
+annotation	.Houston,TX
+ll	29.75000	-95.35000
+annotation	.IdahoFalls,ID
+ll	43.50000	-112.01667
+annotation	.Indianapolis,IN
+ll	39.76667	-86.16667
+annotation	.Jackson,MS
+ll	32.33333	-90.20000
+annotation	.Jacksonville,FL
+ll	30.36667	-81.66667
+annotation	.Juneau,AK
+ll	58.30000	-134.40000
+annotation	.KansasCity,MO
+ll	39.10000	-94.58333
+annotation	.KeyWest,FL
+ll	24.55000	-81.80000
+annotation	.KlamathFalls,OR
+ll	42.16667	-121.73333
+annotation	.Knoxville,TN
+ll	35.95000	-83.93333
+annotation	.LasVegas,NV
+ll	36.16667	-115.20000
+annotation	.Lewiston,ID
+ll	46.40000	-117.03333
+annotation	.Lincoln,NE
+ll	40.83333	-96.66667
+annotation	.LongBeach,CA
+ll	33.76667	-118.18333
+annotation	.LosAngeles,CA
+ll	34.05000	-118.25000
+annotation	.Louisville,KY
+ll	38.25000	-85.76667
+annotation	.Manchester,NH
+ll	43.00000	-71.50000
+annotation	.Memphis,TN
+ll	35.15000	-90.05000
+annotation	.Miami,FL
+ll	25.76667	-80.20000
+annotation	.Milwaukee,WI
+ll	43.03333	-87.91667
+annotation	.Minneapolis,MN
+ll	44.98333	-93.23333
+annotation	.Mobile,AL
+ll	30.70000	-88.05000
+annotation	.Montgomery,AL
+ll	32.35000	-86.30000
+annotation	.Montpelier,VT
+ll	44.25000	-72.53333
+annotation	.Nashville,TN
+ll	36.16667	-86.78333
+annotation	.Newark,NJ
+ll	40.73333	-74.16667
+annotation	.NewHaven,CT
+ll	41.31667	-72.91667
+annotation	.NewOrleans,LA
+ll	29.95000	-90.06667
+annotation	.NewYork,NY
+ll	40.78333	-73.96667
+end
+start
+annotation	.Nome,AK
+ll	64.41667	-165.50000
+annotation	.Oakland,CA
+ll	37.80000	-122.26667
+annotation	.OklahomaCity,OK
+ll	35.43333	-97.46667
+annotation	.Omaha,NE
+ll	41.25000	-95.93333
+annotation	.Philadelphia,PA
+ll	39.95000	-75.16667
+annotation	.Phoenix,AZ
+ll	33.48333	-112.06667
+annotation	.Pierre,SD
+ll	44.36667	-100.35000
+annotation	.Pittsburgh,PA
+ll	40.45000	-79.95000
+annotation	.Portland,ME
+ll	43.66667	-70.25000
+annotation	.Portland,OR
+ll	45.51667	-122.68333
+annotation	.Providence,RI
+ll	41.83333	-71.40000
+annotation	.Raleigh,NC
+ll	35.76667	-78.65000
+annotation	.Reno,NV
+ll	39.50000	-119.81667
+annotation	.Richfield,UT
+ll	38.76667	-112.08333
+annotation	.Richmond,VA
+ll	37.55000	-77.48333
+annotation	.Roanoke,VA
+ll	37.28333	-79.95000
+annotation	.Sacramento,CA
+ll	38.58333	-121.50000
+annotation	.StLouis,MO
+ll	38.58333	-90.20000
+annotation	.SaltLakeCity,UT
+ll	40.76667	-111.90000
+annotation	.SanAntonio,TX
+ll	29.38333	-98.55000
+annotation	.SanDiego,CA
+ll	32.70000	-117.16667
+annotation	.SanFrancisco,CA
+ll	37.78333	-122.43333
+annotation	.SanJose,CA
+ll	37.33333	-121.88333
+annotation	.SanJuan,P.R.
+ll	18.50000	-66.16667
+annotation	.SantaFe,NM
+ll	35.68333	-105.95000
+annotation	.Savannah,GA
+ll	32.08333	-81.08333
+annotation	.Seattle,WA
+ll	47.61667	-122.33333
+annotation	.Shreveport,LA
+ll	32.46667	-93.70000
+annotation	.SiouxFalls,SD
+ll	43.55000	-96.73333
+annotation	.Sitka,AK
+ll	57.16667	-135.25000
+annotation	.Spokane,WA
+ll	47.66667	-117.43333
+annotation	.Springfield,IL
+ll	39.80000	-89.63333
+annotation	.Springfield,MA
+ll	42.10000	-72.56667
+annotation	.Springfield,MO
+ll	37.21667	-93.28333
+annotation	.Syracuse,NY
+ll	43.03333	-76.13333
+annotation	.Tampa,FL
+ll	27.95000	-82.45000
+annotation	.Toledo,OH
+ll	41.65000	-83.55000
+annotation	.Tulsa,OK
+ll	36.15000	-95.98333
+annotation	.VirginiaBeach,VA
+ll	36.85000	-75.96667
+annotation	.Washington,DC
+ll	38.88333	-77.03333
+annotation	.Wichita,KS
+ll	37.71667	-97.28333
+annotation	.Wilmington,NC
+ll	34.23333	-77.95000
+end
+comment -------- Canada --------
+start
+annotation	.Calgary,Alberta
+ll	51.01667	-114.01667
+annotation	.Kingston,Ont.
+ll	44.25000	-76.50000
+annotation	.Winnipeg,Man.
+ll	49.90000	-97.11667
+annotation	.Victoria,B.C.
+ll	48.41667	-123.35000
+annotation	.Ottawa
+ll	45.40000	-75.71667
+annotation	.PortArthur,Ont
+ll	48.50000	-89.28333
+annotation	.Quebec
+ll	46.81667	-71.18333
+annotation	.Toronto,Ont.
+ll	43.66667	-79.40000
+annotation	.StJohn,N.B.
+ll	45.30000	-66.16667
+annotation	.London,Ont.
+ll	43.03333	-81.56667
+annotation	.Nelson,B.C.
+ll	49.50000	-117.28333
+annotation	.Montreal
+ll	45.50000	-73.58333
+annotation	.MooseJaw
+ll	50.61667	-105.51667
+end
