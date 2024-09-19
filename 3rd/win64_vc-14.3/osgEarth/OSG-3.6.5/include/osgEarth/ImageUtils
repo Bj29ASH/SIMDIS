@@ -310,13 +310,11 @@ namespace osgEarth { namespace Util
         /**
          * Creates a copy of the input image with added mipmaps.
          * @param image Input image to generate mipmaps for
-         * @param minLevelSize The smallest mipmap level size to generate
          * @return image with mipmaps. If the input already had mipmaps,
          *   just returns the input pointer (that is why it's const)
          */
         static const osg::Image* mipmapImage(
-            const osg::Image* image,
-            int minLevelSize = 16);
+            const osg::Image* image);
 
         /**
         * Adds mipmaps to an existing image if neccessary
@@ -355,17 +353,11 @@ namespace osgEarth { namespace Util
          */
         static osg::Image* readStream(std::istream& stream, const osgDB::Options* options);
 
-        //! Make an empty 2D texture array
         static osg::Texture2DArray* makeTexture2DArray(osg::Image* image);
 
-        //! Convert u,v [0..1] into s,t [pixels] with nearest neighbor sampling.
-        template<typename NDCTYPE, typename INDEXTYPE>
-        static void nnUVtoST(NDCTYPE u, NDCTYPE v, INDEXTYPE& s, INDEXTYPE& t, unsigned width, unsigned height) {
-            const NDCTYPE umin = 1.0 / (2.0 * width);
-            const NDCTYPE vmin = 1.0 / (2.0 * height);
-            s = u<umin ? 0 : u>(1.0 - umin) ? width - 1 : (int)floor(u*(double)width);
-            t = v<vmin ? 0 : v>(1.0 - vmin) ? height - 1 : (int)floor(v*(double)height);
-        }
+        struct IteratorIF
+        {
+        };
 
         /**
          * Reads color data out of an image, regardles of its internal pixel format.
@@ -412,23 +404,23 @@ namespace osgEarth { namespace Util
             inline int t() const { return _image->t(); }
 
             //! Returns a color from an image at pixel (s,t,r,m)
-            inline osg::Vec4f operator()(int s, int t, int r=0, int m=0) const {
+            osg::Vec4f operator()(int s, int t, int r=0, int m=0) const {
                 osg::Vec4f temp;
                 _read(this, temp, s, t, r, m);
                 return temp;
             }
 
-            inline void operator()(osg::Vec4f& output, int s, int t, int r=0, int m=0) const {
+            void operator()(osg::Vec4f& output, int s, int t, int r=0, int m=0) const {
                 _read(this, output, s, t, r, m);
             }
 
             //! Returns a color from an image at pixel (s,t,r,m)
-            inline osg::Vec4f operator()(unsigned s, unsigned t, unsigned r=0, int m=0) const {
+            osg::Vec4f operator()(unsigned s, unsigned t, unsigned r=0, int m=0) const {
                 osg::Vec4f temp;
                 _read(this, temp, s, t, r, m);
                 return temp;
             }
-            inline void operator()(osg::Vec4f& output, unsigned s, unsigned t, int r=0, int m=0) const {
+            void operator()(osg::Vec4f& output, unsigned s, unsigned t, int r=0, int m=0) const {
                 _read(this, output, s, t, r, m);
             }
 
@@ -445,8 +437,8 @@ namespace osgEarth { namespace Util
                     _image->getMipmapData(m-1) + (s>>m)*_colBytes + (t>>m)*(_rowBytes>>m) + r*(_imageBytes>>m);
             }
 
-            typedef void (*ReaderFunc)(const PixelReader* ia, osg::Vec4f& output, int s, int t, int r, int m);
-            //typedef std::function<void(const PixelReader* ia, osg::Vec4f& output, int s, int t, int r, int m)> ReaderFunc;
+            //typedef void (*ReaderFunc)(const PixelReader* ia, osg::Vec4f& output, int s, int t, int r, int m);
+            typedef std::function<void(const PixelReader* ia, osg::Vec4f& output, int s, int t, int r, int m)> ReaderFunc;
             ReaderFunc _read;
             const osg::Image* _image;
             unsigned _colBytes;
@@ -491,11 +483,11 @@ namespace osgEarth { namespace Util
             void assign(const osg::Vec4& c, int r);
 
             /** Writes a color to a pixel. */
-            inline void operator()(const osg::Vec4& c, int s, int t, int r=0, int m=0) {
+            void operator()(const osg::Vec4& c, int s, int t, int r=0, int m=0) {
                 (*_writer)(this, c, s, t, r, m );
             }
 
-            inline  void f(const osg::Vec4& c, float s, float t, int r=0, int m=0) {
+            void f(const osg::Vec4& c, float s, float t, int r=0, int m=0) {
                 this->operator()( c,
                     (int)(s * (float)(_image->s()-1)),
                     (int)(t * (float)(_image->t()-1)),
@@ -536,9 +528,7 @@ namespace osgEarth { namespace Util
             inline double u() const { return _u; }
             inline double v() const { return _v; }
 
-            //inline void forEachPixel(const std::function<void()>& func)
-            template<typename Func>
-            inline void forEachPixel(const Func& func)
+            inline void forEachPixel(const std::function<void()>& func)
             {
                 for (_r = 0; _r < _image->r(); ++_r)
                 {
@@ -586,16 +576,12 @@ namespace osgEarth { namespace Util
             inline double x() const { return _x; }
             inline double y() const { return _y; }
 
-            //inline void forEachPixel(const std::function<void()>& func)
-            template<typename Func>
-            inline void forEachPixel(const Func& func)
+            inline void forEachPixel(const std::function<void()>& func)
             {
                 forEachPixelOnCenter(func);
             }
 
-            //inline void forEachPixelOnCenter(const std::function<void()>& func)
-            template<typename Func>
-            inline void forEachPixelOnCenter(const Func& func)
+            inline void forEachPixelOnCenter(const std::function<void()>& func)
             {
                 double _bu = 0.5 / (double)_image->s();
                 double _bv = 0.5 / (double)_image->t();

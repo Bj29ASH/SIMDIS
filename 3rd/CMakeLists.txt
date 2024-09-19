@@ -16,7 +16,7 @@ target_link_directories(simdis_3rd_party
   $<INSTALL_INTERFACE:lib/simdis_3rd_party/osgQt>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/GLEW/2.1.0/lib>
   $<INSTALL_INTERFACE:lib/simdis_3rd_party/GLEW>
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/GDAL/3.4.3/lib>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/GDAL/3.2.3/lib>
   $<INSTALL_INTERFACE:lib/simdis_3rd_party/GDAL>
 )
 
@@ -30,7 +30,7 @@ target_include_directories(simdis_3rd_party
   $<INSTALL_INTERFACE:include/simdis_3rd_party/osgQt>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/GLEW/2.1.0/include>
   $<INSTALL_INTERFACE:include/simdis_3rd_party/GLEW>
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/GDAL/3.4.3/include>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/GDAL/3.2.3/include>
   $<INSTALL_INTERFACE:include/simdis_3rd_party/GDAL>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/protobuf/3.14.0/include>
   $<INSTALL_INTERFACE:include/simdis_3rd_party/protobuf>
@@ -84,8 +84,8 @@ target_link_libraries(simdis_3rd_party
   $<INSTALL_INTERFACE:osgQt5.lib>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/GLEW/2.1.0/lib/GLEW.lib>
   $<INSTALL_INTERFACE:GLEW.lib>
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/GDAL/3.4..3/lib/gdal304.lib>
-  $<INSTALL_INTERFACE:gdal304.lib>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/GDAL/3.2..3/lib/gdal302.lib>
+  $<INSTALL_INTERFACE:gdal302.lib>
 )
 
 include(CMakePackageConfigHelpers)
@@ -143,7 +143,7 @@ install(DIRECTORY
   DESTINATION include/simdis_3rd_party/GLEW
 )
 
-file(GLOB GLEW_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/GDAL/3.4.3/include/*.h")
+file(GLOB GLEW_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/GDAL/3.2.3/include/*.h")
 install(FILES
   ${GLEW_HEADERS}
   DESTINATION include/simdis_3rd_party/GDAL
@@ -194,7 +194,7 @@ install(FILES
 )
 
 install(FILES
-  "${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/GDAL/3.4.3/lib/gdal304.lib"
+  "${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/GDAL/3.2.3/lib/gdal302.lib"
   DESTINATION lib/simdis_3rd_party/GDAL
 )
 
@@ -214,7 +214,7 @@ install(DIRECTORY
 )
 
 install(DIRECTORY
-  "${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/GDAL/3.4.3/bin"
+  "${CMAKE_CURRENT_SOURCE_DIR}/win64_vc-14.3/GDAL/3.2.3/bin"
   DESTINATION /
 )
 

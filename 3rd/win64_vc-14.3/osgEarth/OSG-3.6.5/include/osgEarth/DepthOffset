@@ -26,7 +26,6 @@
 #include <osg/Group>
 #include <osg/Program>
 #include <osg/Uniform>
-#include <osg/observer_ptr>
 
 /**
 * Depth Offsetting.

@@ -214,13 +214,14 @@ namespace osgEarth
             const Distance& resolution,
             WorkingSet* ws =nullptr);
 
+        //! Invalidates all caches in the ElevationPool
+        void clear();
+
     protected:
         //! Destructor
         virtual ~ElevationPool();
 
     private:
-
-        bool needsRefresh();
 
         // weak pointer to the map from whence this pool came
         osg::observer_ptr<const Map> _map;
@@ -243,16 +244,23 @@ namespace osgEarth
 
         //WorkingSet* _L2;
 
-        size_t _elevationHash;
-        int  _mapRevision;
+        bool _mapDataDirty;
 
         Threading::Mutex _refreshMutex;
+
+        struct MapCallbackAdapter : public MapCallback {
+            void onMapModelChanged(const MapModelChange&);
+            ElevationPool* _pool;
+        };
+        friend struct MapCallbackAdapter;
+
+        osg::ref_ptr<MapCallbackAdapter> _mapCallback;
 
         ElevationLayerVector _elevationLayers;
 
         std::atomic<int> _workers;
 
-        size_t getElevationHash() const;
+        int getElevationRevision(const Map* map) const;
 
         void sync(const Map*, WorkingSet*);
 
@@ -318,7 +326,7 @@ namespace osgEarth
 
         osg::observer_ptr<const Map> _map;
         ElevationPool::WorkingSet _ws;
-        JobArena* _arena;
+        JobArena _arena;
     };
 } // namespace
 

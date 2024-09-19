@@ -27,7 +27,6 @@
 #include <osgEarth/CircleNode>
 #include <osgEarth/SDF>
 #include <osgEarth/FeatureNode>
-#include <osgEarth/FeatureRasterizer>
 #include <osgDB/WriteFile>
 
 namespace osgEarth
@@ -154,11 +153,10 @@ namespace osgEarth
                     0.5f * width,
                     nullptr);
 
-
                 out_elevation = new osg::Image();
                 out_elevation->allocateImage(
-                    256,
-                    256,
+                    ELEVATION_TILE_SIZE,
+                    ELEVATION_TILE_SIZE,
                     1,
                     GL_RED,
                     GL_UNSIGNED_BYTE);
@@ -188,8 +186,7 @@ namespace osgEarth
                 lm_iter.forEachPixel([&]()
                     {
                         readSDF(value, lm_iter.s(), lm_iter.t());
-                        float dist = clamp(value.r(), 0.0f, 1.0f);
-                        dist = accel(accel(dist));
+                        float dist = value.r();
                         value.set(rugged, dense, lush, (1.0f - dist) * lifemapMix);
                         writeLifeMap(value, lm_iter.s(), lm_iter.t());
                     }
@@ -207,7 +204,6 @@ namespace osgEarth
         class TerrainEditGUI : public BaseGUI
         {
         private:
-            bool _installed;
             osg::observer_ptr<MapNode> _mapNode;
             osg::ref_ptr<DecalElevationLayer> _elevDecal;
             osg::ref_ptr<DecalImageLayer> _lifemapDecal;
@@ -226,10 +222,10 @@ namespace osgEarth
             osg::ref_ptr<CircleNode> _craterCursor;
             osg::ref_ptr<FeatureNode> _ditchCursor;
             osg::ref_ptr<Feature> _ditchFeature;
+            Style _ditchStyle;
 
         public:
             TerrainEditGUI() : BaseGUI("Terrain Editing"),
-                _installed(false),
                 _placingCrater(false),
                 _placingDitch(false),
                 _width(5.0f),
@@ -252,17 +248,10 @@ namespace osgEarth
             {
                 if (!isVisible()) return;
                 if (!findNodeOrHide(_mapNode, ri)) return;
-
-                if (!_installed)
+                
+                if (!_elevDecal.valid())
                 {
-                    auto event_view = view(ri);
-                    view(ri)->getViewerBase()->addUpdateOperation(new OneTimer([this, event_view]()
-                        {
-                            setup(event_view);
-                        }));
-
-                    _installed = true;
-                    return;
+                    setup(ri);
                 }
 
                 ImGui::Begin(name(), visible());
@@ -276,7 +265,7 @@ namespace osgEarth
                         ImGui::TextColored(ImVec4(1, 1, 0, 1), "Click points; press ENTER to finish");
 
                     ImGui::Separator();
-                    ImGui::SliderFloat("Width(m)", &_width, 1.0f, 50.0f);
+                    ImGui::SliderFloat("Width(m)", &_width, 1.0f, 25.0f);
                     ImGui::SliderFloat("Height(m)", &_height, -10.0f, 10.0f);
                     ImGui::SliderFloat("Rugged", &_rugged, 0.0f, 1.0f);
                     ImGui::SliderFloat("Dense", &_dense, 0.0f, 1.0f);
@@ -378,11 +367,10 @@ namespace osgEarth
                 {
                     if (_ditchCursor->getNodeMask() == 0)
                     {
-                        Style& style = _ditchFeature->style().mutable_value();
-                        auto line = style.getOrCreate<LineSymbol>();
-                        line->stroke()->width() = _width;
-                        line->stroke()->widthUnits() = Units::METERS;
-                        line->tessellationSize()->set(_width, Units::METERS);
+                        _ditchStyle.getOrCreate<LineSymbol>()->stroke()->width() = _width;
+                        _ditchStyle.getOrCreate<LineSymbol>()->stroke()->widthUnits() = Units::METERS;
+                        _ditchStyle.getOrCreate<LineSymbol>()->tessellationSize()->set(_width, Units::METERS);
+                        _ditchCursor->setStyle(_ditchStyle);
                     }
                     _ditchCursor->setNodeMask(~0);
                     GeoPoint pf = p.transform(_ditchFeature->getSRS());
@@ -458,11 +446,8 @@ namespace osgEarth
                 _ditchCursor->setNodeMask(0);
             }
             
-            void setup(osgViewer::View* view)
+            void setup(osg::RenderInfo& ri)
             {
-                if (_elevDecal.valid())
-                    return;
-
                 _elevDecal = new DecalElevationLayer();
                 _elevDecal->setName("Elevation Decals");
                 _elevDecal->setMinLevel(_minLevel);
@@ -473,15 +458,8 @@ namespace osgEarth
                 _lifemapDecal->setName("LifeMap Decals");
                 _lifemapDecal->setMinLevel(_minLevel);
 
-                // lifemap data needs special blending treatment on the A channel
-                // since this contains material override data.
-                _lifemapDecal->setBlendFuncs(
-                    GL_SRC_ALPHA,
-                    GL_ONE_MINUS_SRC_ALPHA,
-                    GL_ZERO,
-                    GL_ONE);
-
-                // If there is a LifeMapLayer, append to it as a Post, otherwise standalone decal.
+                // If there is a layer called "Life Map" append to it as a Post,
+                // otherwise standalone decal.
                 std::vector<osg::ref_ptr<Layer>> lifemaplayers;
                 _mapNode->getMap()->getLayers(lifemaplayers,
                     [&](const Layer* layer) {
@@ -512,18 +490,17 @@ namespace osgEarth
                 _craterCursor->setStyle(craterStyle);
                 _mapNode->addChild(_craterCursor);
 
-                Style ditchStyle;
-                ditchStyle.getOrCreate<LineSymbol>()->stroke()->color() = Color(1, 1, 0, 0.65f);
-                ditchStyle.getOrCreate<LineSymbol>()->stroke()->lineCap() = Stroke::LINECAP_ROUND;
-                ditchStyle.getOrCreate<AltitudeSymbol>()->clamping() = AltitudeSymbol::CLAMP_TO_TERRAIN;
-                ditchStyle.getOrCreate<RenderSymbol>()->depthOffset()->enabled() = true;
-                ditchStyle.getOrCreate<RenderSymbol>()->depthOffset()->automatic() = true;
-                _ditchFeature = new Feature(new LineString(), SpatialReference::get("spherical-mercator"), ditchStyle);
-                _ditchCursor = new FeatureNode(_ditchFeature.get());
+                _ditchStyle.getOrCreate<LineSymbol>()->stroke()->width() = 3.0f;
+                _ditchStyle.getOrCreate<LineSymbol>()->stroke()->color().set(1, 1, 0, 0.65);
+                _ditchStyle.getOrCreate<AltitudeSymbol>()->clamping() = AltitudeSymbol::CLAMP_TO_TERRAIN;
+                _ditchStyle.getOrCreate<RenderSymbol>()->depthOffset()->enabled() = true;
+                _ditchStyle.getOrCreate<RenderSymbol>()->depthOffset()->automatic() = true;
+                _ditchFeature = new Feature(new LineString(), SpatialReference::get("spherical-mercator"), _ditchStyle);
+                _ditchCursor = new FeatureNode(_ditchFeature.get(), _ditchStyle);
                 _ditchCursor->setNodeMask(0);
                 _mapNode->addChild(_ditchCursor);
 
-                EventRouter::get(view)
+                EventRouter::get(view(ri))
                     .onClick([this](osg::View* v, float x, float y) { handleClick(v, x, y); })
                     .onMove([this](osg::View* v, float x, float y) { handleMove(v, x, y); })
                     .onKeyPress(EventRouter::KEY_Return, [this]() { finishDrawing(); })

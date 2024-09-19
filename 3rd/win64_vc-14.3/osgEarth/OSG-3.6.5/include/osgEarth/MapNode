@@ -27,14 +27,10 @@
 #include <osgEarth/Map>
 #include <osgEarth/Extension>
 #include <osgEarth/TerrainOptions>
+#include <osgEarth/Registry>
 
 namespace osg {
     class View;
-}
-
-namespace osgEarth
-{
-    class Registry;
 }
 
 namespace osgEarth
@@ -72,7 +68,6 @@ namespace osgEarth
             OE_OPTION(bool, useCascadeDraping);
             OE_OPTION(TerrainOptions, terrain);
             OE_OPTION(int, drapingRenderBinNumber);
-            OE_OPTION(float, screenSpaceError);
             virtual Config getConfig() const;
         private:
             void fromConfig(const Config& conf);

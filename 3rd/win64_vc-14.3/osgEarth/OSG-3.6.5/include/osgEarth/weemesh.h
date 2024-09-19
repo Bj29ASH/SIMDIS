@@ -1,10 +1,14 @@
 #ifndef OSGEARTH_WEE_MESH
 #define OSGEARTH_WEE_MESH 1
 
+#include "Common"
 #include "rtree.h"
 #include "Math"
 #include <math.h>
 #include <map>
+#include <osg/Vec3d>
+#include <osg/Math>
+#include <osg/MixinVector>
 
 namespace weemesh
 {
@@ -15,7 +19,7 @@ namespace weemesh
     // 2.5D vertex. Holds a Z, but most operations only use X/Y
     struct vert_t
     {
-        using value_type = double;
+        typedef double value_type;
         double _x, _y, _z;
         double& x() { return _x; }
         const double& x() const { return _x; }
@@ -25,16 +29,12 @@ namespace weemesh
         const double& z() const { return _z; }
         vert_t() { }
         vert_t(value_type a, value_type b, value_type c) : _x(a), _y(b), _z(c) { }
-        vert_t(value_type* ptr) : _x(ptr[0]), _y(ptr[1]), _z(ptr[2]) { }
         vert_t(const vert_t& rhs) : _x(rhs.x()), _y(rhs.y()), _z(rhs.z()) { }
+        vert_t(const osg::Vec3d& rhs) : _x(rhs.x()), _y(rhs.y()), _z(rhs.z()) { }
         bool operator < (const vert_t& rhs) const {
             if (x() < rhs.x()) return true;
             if (x() > rhs.x()) return false;
             return y() < rhs.y();
-            // use this if we move to 3D someday
-            //if (y() < rhs.y()) return true;
-            //if (y() > rhs.y()) return false;
-            //return z() < rhs.z();
         }
         const value_type& operator[](int i) const {
             return i == 0 ? _x : i == 1 ? _y : _z;
@@ -58,16 +58,16 @@ namespace weemesh
             return x()*rhs.y() - rhs.x()*y();
         }
         vert_t normalize2d() const {
-            double len = length2d();
+            double len = length();
             return vert_t(x() / len, y() / len, z());
         }
         void set(value_type a, value_type b, value_type c) {
             _x = a, _y = b, _z = c;
         }
-        value_type length2d() const {
+        value_type length() const {
             return sqrt((_x*_x) + (_y*_y));
         }
-        value_type length2d_squared() const {
+        value_type length2() const {
             return (_x*_x) + (_y*_y);
         }
     };
@@ -76,22 +76,19 @@ namespace weemesh
 
     constexpr vert_t::value_type EPSILON = 1e-6;
 
-    inline bool same_vert(const vert_t& a, const vert_t& b, vert_t::value_type epsilon = EPSILON)
+    inline bool equivalent(const vert_t& a, const vert_t& b, vert_t::value_type epsilon = EPSILON)
     {
         return
-            equivalent(a.x(), b.x(), epsilon) &&
-            equivalent(a.y(), b.y(), epsilon);
-
-        // use this if we move to 3D one day
-        // && equivalent(a.z(), b.z(), epsilon);
+            osg::equivalent(a.x(), b.x(), epsilon) &&
+            osg::equivalent(a.y(), b.y(), epsilon);
     }
 
 
     // uniquely map vertices to indices
-    using vert_table_t = std::map<vert_t, int>;
+    typedef std::map<vert_t, int> vert_table_t;
 
     // array of vert_t's
-    using vert_array_t = std::vector<vert_t>;
+    struct vert_array_t : public osg::MixinVector<vert_t> { };
 
     // line segment connecting two verts
     struct segment_t : std::pair<vert_t, vert_t>
@@ -106,7 +103,7 @@ namespace weemesh
             vert_t s = rhs.second - rhs.first;
             vert_t::value_type det = r.cross2d(s);
 
-            if (equivalent(det, zero))
+            if (osg::equivalent(det, zero))
                 return false;
 
             vert_t diff = rhs.first - first;
@@ -144,14 +141,14 @@ namespace weemesh
         // true if point P is one of the triangle's verts
         inline bool is_vertex(const vert_t& p, vert_t::value_type e = EPSILON) const
         {
-            if (equivalent(p.x(), p0.x(), e) &&
-                equivalent(p.y(), p0.y(), e))
+            if (osg::equivalent(p.x(), p0.x(), e) &&
+                osg::equivalent(p.y(), p0.y(), e))
                 return true;
-            if (equivalent(p.x(), p1.x(), e) &&
-                equivalent(p.y(), p1.y(), e))
+            if (osg::equivalent(p.x(), p1.x(), e) &&
+                osg::equivalent(p.y(), p1.y(), e))
                 return true;
-            if (equivalent(p.x(), p2.x(), e) &&
-                equivalent(p.y(), p2.y(), e))
+            if (osg::equivalent(p.x(), p2.x(), e) &&
+                osg::equivalent(p.y(), p2.y(), e))
                 return true;
 
             return false;
@@ -168,7 +165,7 @@ namespace weemesh
             vert_t::value_type denom = d00 * d11 - d01 * d01;
 
             // means that one of more of the triangles points are coincident:
-            if (equivalent(denom, 0.0))
+            if (osg::equivalent(denom, 0.0))
                 return false;
 
             out.y() = (d11*d20 - d01 * d21) / denom;
@@ -179,7 +176,53 @@ namespace weemesh
         }
     };
 
-    using spatial_index_t = RTree<UID, vert_t::value_type, 2>;
+#if 1
+    typedef RTree<UID, vert_t::value_type, 2> spatial_index_t;
+#else
+    //! A dirt-simple (and slow) spatial index, just for testing.
+    struct spatial_index_t {
+        struct rec {
+            UID uid;
+            double a_min[2];
+            double a_max[2];
+            bool operator < (const rec& rhs) const {
+                return uid < rhs.uid;
+            }
+        };
+        std::map<UID, rec> _recs;
+
+        void Insert(double* a_min, double* a_max, UID uid)
+        {
+            rec& r = _recs[uid];
+            r.uid = uid;
+            r.a_min[0] = a_min[0], r.a_min[1] = a_min[1];
+            r.a_max[0] = a_max[0], r.a_max[1] = a_max[1];
+        }
+
+        void Remove(double* a_min, double* a_max, UID uid)
+        {
+            _recs.erase(uid);
+        }
+
+        void Search(double* a_min, double* a_max, std::unordered_set<UID>* hits, int maxHits) const
+        {
+            for (auto& e : _recs)
+            {
+                if (e.second.a_min[0] > a_max[0] ||
+                    e.second.a_max[0] < a_min[0] ||
+                    e.second.a_min[1] > a_max[1] ||
+                    e.second.a_max[1] < a_min[1])
+                {
+                    continue;
+                }
+                else
+                {
+                    hits->emplace(e.first);
+                }
+            }
+        }
+    };
+#endif
 
     // a mesh edge connecting to verts
     struct edge_t
@@ -269,12 +312,12 @@ namespace weemesh
             // b) at least two edges are basically coincident (in the XY plane)
             constexpr vert_t::value_type E = 0.0005;
             tri.is_2d_degenerate =
-                same_vert(tri.p0, tri.p1, E) ||
-                same_vert(tri.p1, tri.p2, E) ||
-                same_vert(tri.p2, tri.p0, E) ||
-                same_vert((tri.p1 - tri.p0).normalize2d(), (tri.p2 - tri.p0).normalize2d(), E) ||
-                same_vert((tri.p2 - tri.p1).normalize2d(), (tri.p0 - tri.p1).normalize2d(), E) ||
-                same_vert((tri.p0 - tri.p2).normalize2d(), (tri.p1 - tri.p2).normalize2d(), E);
+                equivalent(tri.p0, tri.p1, E) ||
+                equivalent(tri.p1, tri.p2, E) ||
+                equivalent(tri.p2, tri.p0, E) ||
+                equivalent((tri.p1 - tri.p0).normalize2d(), (tri.p2 - tri.p0).normalize2d(), E) ||
+                equivalent((tri.p2 - tri.p1).normalize2d(), (tri.p0 - tri.p1).normalize2d(), E) ||
+                equivalent((tri.p0 - tri.p2).normalize2d(), (tri.p1 - tri.p2).normalize2d(), E);
 
             _triangles.emplace(uid, tri);
             _spatial_index.Insert(tri.a_min, tri.a_max, uid);
@@ -564,7 +607,7 @@ namespace weemesh
             if (tri.get_barycentric(p, bary) == false)
                 return;
 
-            if (!equivalent(bary[2], 0.0, EPSILON)) {
+            if (!osg::equivalent(bary[2], 0.0, EPSILON)) {
                 new_uid = add_triangle(tri.i0, tri.i1, new_i);
                 if (new_uid >= 0 && uid_list) {
                     _markers[tri.i0] |= _constraint_marker;
@@ -574,7 +617,7 @@ namespace weemesh
                 }
             }
 
-            if (!equivalent(bary[0], 0.0, EPSILON)) {
+            if (!osg::equivalent(bary[0], 0.0, EPSILON)) {
                 new_uid = add_triangle(tri.i1, tri.i2, new_i);
                 if (new_uid >= 0 && uid_list) {
                     _markers[tri.i1] |= _constraint_marker;
@@ -584,7 +627,7 @@ namespace weemesh
                 }
             }
 
-            if (!equivalent(bary[1], 0.0, EPSILON)) {
+            if (!osg::equivalent(bary[1], 0.0, EPSILON)) {
                 new_uid = add_triangle(tri.i2, tri.i0, new_i);
                 if (new_uid >= 0 && uid_list) {
                     _markers[tri.i2] |= _constraint_marker;
@@ -632,34 +675,11 @@ namespace weemesh
             bool m2 = (mesh._markers[tri.i2] & marker_mask) != 0;
 
             if (m0 && m1)
-                _edges.emplace(tri.i0, tri.i1);
+                _edges.emplace(edge_t(tri.i0, tri.i1));
             if (m1 && m2)
-                _edges.emplace(tri.i1, tri.i2);
+                _edges.emplace(edge_t(tri.i1, tri.i2));
             if (m2 && m0)
-                _edges.emplace(tri.i2, tri.i0);
-        }
-    };
-
-    // each node paires with a vector of its neighbors, i.e. other
-    // nodes with which is shares an edge.
-    struct neighbors_t
-    {
-        edgeset_t _edgeset;
-        std::unordered_map<int, std::vector<int>> _neighbormap;
-
-        neighbors_t(const mesh_t& mesh) :
-            _edgeset(mesh, ~0)
-        {
-            for (auto& edge : _edgeset._edges)
-            {
-                _neighbormap[edge._i0].push_back(edge._i1);
-                _neighbormap[edge._i1].push_back(edge._i0);
-            }
-        }
-
-        const std::vector<int>& operator()(int vertex_index)
-        {
-            return _neighbormap[vertex_index];
+                _edges.emplace(edge_t(tri.i2, tri.i0));
         }
     };
 

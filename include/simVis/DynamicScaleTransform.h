@@ -79,8 +79,6 @@ public:
   void setSizingNode(osg::Node* node);
   /** Recomputes the bounds from the sizing node; use this when sizing node changes size; automatically called on setSizingNode() */
   void recomputeBounds();
-  /** Use the specified size instead of the icon size; this allows all the highlights to be the same size */
-  void setFixedSize(double meters);
 
   /** Turns on or off the dynamic scaling.  When off, no scaling is done. */
   void setDynamicScalingEnabled(bool enabled);
@@ -184,8 +182,6 @@ private:
 
   /// Computed icon scaling factor, based on bounding box of sizing node, used only in original SIMDIS Dynamic Scale method
   double iconScaleFactor_;
-  /// Allows for a fixed size so highlights are the same size for different icons
-  double fixedIconScaleFactor_;
 };
 
 }

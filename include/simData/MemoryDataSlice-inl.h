@@ -691,10 +691,13 @@ void MemoryCommandSlice<CommandType, PrefType>::update(DataStore *ds, ObjectId i
     return;
 
   const CommandType *lastCommand = current();
-  if ((!lastCommand || time >= lastCommand->time()) && (earliestInsert_ > lastUpdateTime_))
+  if (!lastCommand || time >= lastCommand->time())
   {
-    // time moved forward: execute all commands from lastUpdateTime_ to new current time
-    hasChanged_ = advance_(lastUpdateTime_, time);
+    // Start from the earlier of lastUpdateTime_ or earliestInsert_
+    const double startTime = (lastUpdateTime_ < earliestInsert_) ? lastUpdateTime_ : (earliestInsert_ - 0.0000001);  // Need the minus delta because of upper_bound in advance_
+
+    // time moved forward: execute all commands from startTime to new current time
+    hasChanged_ = advance_(startTime, time);
 
     // Check for repeated scalars in the command, forcing complete replacement instead of add-value
     conditionalClearRepeatedFields_(prefs, &commandPrefsCache_);
@@ -702,6 +705,9 @@ void MemoryCommandSlice<CommandType, PrefType>::update(DataStore *ds, ObjectId i
     // apply the current command state at every update, even if no change in command state occurred with this update; commands override prefs settings
     prefs->MergeFrom(commandPrefsCache_);
     t.complete(&prefs);
+
+    // reset to no inserted commands
+    earliestInsert_ = std::numeric_limits<double>::max();
   }
   else
   {
@@ -718,9 +724,6 @@ void MemoryCommandSlice<CommandType, PrefType>::update(DataStore *ds, ObjectId i
     prefs->MergeFrom(commandPrefsCache_);
     t.complete(&prefs);
   }
-
-  // reset to no inserted commands
-  earliestInsert_ = std::numeric_limits<double>::max();
 }
 
 template<class CommandType, class PrefType>
@@ -821,9 +824,9 @@ bool MemoryCommandSlice<CommandType, PrefType>::advance_(double startTime, doubl
       }
       // a command was executed, which may or may not be an actual change in prefs.
       prefsWereUpdated = true;
-      lastUpdateTime_ = cmd->time();
     }
   }
+  lastUpdateTime_ = time;
   return prefsWereUpdated;
 }
 

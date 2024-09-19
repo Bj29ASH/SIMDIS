@@ -32,7 +32,6 @@
 #include "osg/PointSprite"
 #include "osg/OperationThread"
 #include "simNotify/Notify.h"
-#include "simCore/String/Utils.h"
 
 #ifndef GL_CONTEXT_PROFILE_MASK
 #define GL_CONTEXT_PROFILE_MASK 0x9126
@@ -142,27 +141,13 @@ inline void applyMesaGlVersionOverride()
 {
 #ifdef OSG_GL3_AVAILABLE
   osg::DisplaySettings* instance = osg::DisplaySettings::instance().get();
-  const std::string& glContextVersionStr = instance->getGLContextVersion();
-  if (glContextVersionStr == "1.0")
+  if (instance->getGLContextVersion() == "1.0")
     instance->setGLContextVersion("3.3");
-
-#if defined(__linux__)
-  const float glContextVersion = atof(glContextVersionStr.c_str());
-  if (glContextVersion < 3.3f)
-  {
-    SIM_WARN << "GL Context Version is: " << glContextVersionStr << " " << glContextVersion << "\n";
-  }
-  const std::string& mesaGlVersionOverride = simCore::getEnvVar("MESA_GL_VERSION_OVERRIDE");
-  if (!mesaGlVersionOverride.empty())
-  {
-    SIM_WARN << "MESA_GL_VERSION_OVERRIDE has been set by user to: " << mesaGlVersionOverride << ". SIMDIS may not be able to initialize an appropriate OpenGL context.\n";
-  }
-  else if (glContextVersion <= 3.3f)
-  {
-  // some combinations of graphics hardware and MESA drivers on Linux have an additional requirement of setting
+#ifdef __linux__
+  // To compound the problem, certain MESA drivers on Linux have an additional requirement of setting
   // the MESA_GL_VERSION_OVERRIDE environment variable, else we get a bad version.
-    setenv("MESA_GL_VERSION_OVERRIDE", "3.3", 1);
-  }
+  if (getenv("MESA_GL_VERSION_OVERRIDE") == nullptr)
+    setenv("MESA_GL_VERSION_OVERRIDE", instance->getGLContextVersion().c_str(), 1);
 #endif
 #endif
 }

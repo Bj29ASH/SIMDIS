@@ -43,8 +43,9 @@ namespace osgEarth { namespace REX
         const TileKey* _key;
 
         // ModelView matrix to apply before rendering this tile
-        osg::Matrix _modelViewMatrix;
-        osg::Matrix _localToWorld;
+        osg::ref_ptr<const osg::RefMatrix> _modelViewMatrix;
+
+        osg::ref_ptr<const osg::RefMatrix> _localToWorld;
 
         // Samplers that are shared between all rendering passes
         const Samplers* _sharedSamplers;
@@ -106,7 +107,7 @@ namespace osgEarth { namespace REX
                 // same revision
                 _tileRevision == rhs._tileRevision &&
                 // same matrix
-                _modelViewMatrix == rhs._modelViewMatrix &&
+                *_modelViewMatrix == *rhs._modelViewMatrix &&
                 // same underlying geometry pointer - this is important
                 // if we're doing bindless NV rendering and have to 
                 // use a different GPU buffer address.
@@ -146,17 +147,17 @@ namespace osgEarth { namespace REX
         }
 
         const osg::Matrix& getModelViewMatrix() const override {
-            return _modelViewMatrix;
+            return *_modelViewMatrix.get();
         }
 
-        const osg::Matrixd& getLocalToWorld() const override {
+        const osg::RefMatrix* getLocalToWorld() const override {
             return _localToWorld;
             //return *_modelViewMatrix.get();
         }
 
         //! Apply the GL state for this tile (all samplers and uniforms)
         //! in preparation for rendering or computation
-        bool apply(
+        void apply(
             osg::RenderInfo& ri,
             void* implData) const override;
 

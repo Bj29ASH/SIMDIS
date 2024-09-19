@@ -44,16 +44,11 @@ namespace osgEarth { namespace REX
      */
     struct HorizonTileCuller
     {
-        // four points representing to upper face of the bounding box
-        osg::Vec3d _points[4];
-
-        // Horizon object to consider for culling
+        osg::Vec3d  _points[4];
         osg::ref_ptr<Horizon> _horizon;
 
-        //! Reconfigure the culler
         void set(const SpatialReference* srs, const osg::Matrix& local2world, const osg::BoundingBox& bbox);
 
-        //! True if this tile may be visible relative to the horizon
         bool isVisible(const osg::Vec3d& from) const;
     };
 
@@ -69,7 +64,8 @@ namespace osgEarth { namespace REX
             const TileKey& tilekey,
             TileDrawable* drawable);
 
-        //! Update the elevation raster associated with this tile
+        virtual const char* className() const { return "Rex::SurfaceNode"; }
+
         void setElevationRaster(const osg::Image* raster, const osg::Matrixf& scaleBias);
 
         //! Elevation raster representing this surface
@@ -140,7 +136,7 @@ namespace osgEarth { namespace REX
         osg::ref_ptr<osgText::Text> _debugText;
         static const bool           _enableDebugNodes;
         int                         _lastFramePassedCull;
-        HorizonTileCuller           _horizonCuller;
+        HorizonTileCuller           _horizonCuller;        
 
         typedef osg::Vec3 VectorPoints[8];
 

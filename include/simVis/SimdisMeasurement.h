@@ -81,7 +81,7 @@ protected:
 };
 
 /// Antenna Gain
-class SDKVIS_EXPORT RFGainMeasurement : public RelOriMeasurement
+class SDKVIS_EXPORT RFGainMeasurement : public RfMeasurement
 {
 public:
   RFGainMeasurement();

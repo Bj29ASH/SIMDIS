@@ -45,14 +45,12 @@ namespace osgEarth {
     {
         using namespace osgEarth;
 
-        using DrawElementsBase = osg::DrawElementsUShort;
-
         // A DrawElements with a UID.
-        class /* internal */ SharedDrawElements : public DrawElementsBase
+        class /* internal */ SharedDrawElements : public osg::DrawElementsUShort
         {
         public:
             SharedDrawElements(GLenum type) :
-                DrawElementsBase(type)
+                osg::DrawElementsUShort(type)
             {
                 //nop
             }
@@ -64,28 +62,25 @@ namespace osgEarth {
 
             void releaseGLObjects(osg::State* state) const override
             {
-                DrawElementsBase::releaseGLObjects(state);
+                osg::DrawElementsUShort::releaseGLObjects(state);
                 if (state)
-                {
-                    GLObjects::get(_globjects, *state)._ebo = nullptr;
-                }
+                    _gc[state->getContextID()]._ebo = nullptr;
+
                 // Do nothing if state is nullptr!
                 // Let nature take its course and let the GLObjectPool release it
             }
 
             void resizeGLObjectBuffers(unsigned size) override
             {
-                DrawElementsBase::resizeGLObjectBuffers(size);
-                if (size > _globjects.size())
-                    _globjects.resize(size);
+                osg::DrawElementsUShort::resizeGLObjectBuffers(size);
+                _gc.resize(size);
             }
 
-            // Shareable because they are static and bindless
-            struct GLObjects : public ShareableGLObjects
+            struct GCState
             {
-                GLBuffer::Ptr _ebo; // bindless buffer
+                GLBuffer::Ptr _ebo;
             };
-            mutable osg::buffered_object<GLObjects> _globjects;
+            mutable osg::buffered_object<GCState> _gc;
         };
 
         // Adapted from osgTerrain shared geometry class.
@@ -179,13 +174,12 @@ namespace osgEarth {
 
             std::vector<GL4Vertex> _verts;
 
-            // Shareable because they are static and bindless
-            struct GLObjects : public ShareableGLObjects
+            struct GCState
             {
                 DrawElementsIndirectBindlessCommandNV _command;
                 GLBuffer::Ptr _vbo;
             };
-            mutable osg::buffered_object<GLObjects> _globjects;
+            mutable osg::buffered_object<GCState> _gc;
 
         private:
 

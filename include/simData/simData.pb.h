@@ -6634,7 +6634,6 @@ class SDKDATA_EXPORT PlatformPrefs PROTOBUF_FINAL :
     kAnimateDofNodesFieldNumber = 70,
     kEciDataModeFieldNumber = 73,
     kLosAltitudeOffsetFieldNumber = 68,
-    kCircleHilightSizeFieldNumber = 75,
     kCircleHilightShapeFieldNumber = 71,
     kDynamicScaleAlgorithmFieldNumber = 74,
     kClampValAltMinFieldNumber = 8,
@@ -7312,19 +7311,6 @@ class SDKDATA_EXPORT PlatformPrefs PROTOBUF_FINAL :
   void _internal_set_losaltitudeoffset(double value);
   public:
 
-  // optional double circleHilightSize = 75 [default = 0];
-  bool has_circlehilightsize() const;
-  private:
-  bool _internal_has_circlehilightsize() const;
-  public:
-  void clear_circlehilightsize();
-  double circlehilightsize() const;
-  void set_circlehilightsize(double value);
-  private:
-  double _internal_circlehilightsize() const;
-  void _internal_set_circlehilightsize(double value);
-  public:
-
   // optional .simData.CircleHilightShape circleHilightShape = 71 [default = CH_PULSING_CIRCLE];
   bool has_circlehilightshape() const;
   private:
@@ -7744,7 +7730,6 @@ class SDKDATA_EXPORT PlatformPrefs PROTOBUF_FINAL :
   bool animatedofnodes_;
   bool ecidatamode_;
   double losaltitudeoffset_;
-  double circlehilightsize_;
   int circlehilightshape_;
   int dynamicscalealgorithm_;
   double clampvalaltmin_;
@@ -22138,7 +22123,7 @@ inline void PlatformPrefs::set_drawmode(::simData::ModelDrawMode value) {
 
 // optional .simData.IconRotation rotateIcons = 4 [default = IR_2D_YAW];
 inline bool PlatformPrefs::_internal_has_rotateicons() const {
-  bool value = (_has_bits_[1] & 0x00040000u) != 0;
+  bool value = (_has_bits_[1] & 0x00020000u) != 0;
   return value;
 }
 inline bool PlatformPrefs::has_rotateicons() const {
@@ -22146,7 +22131,7 @@ inline bool PlatformPrefs::has_rotateicons() const {
 }
 inline void PlatformPrefs::clear_rotateicons() {
   rotateicons_ = 1;
-  _has_bits_[1] &= ~0x00040000u;
+  _has_bits_[1] &= ~0x00020000u;
 }
 inline ::simData::IconRotation PlatformPrefs::_internal_rotateicons() const {
   return static_cast< ::simData::IconRotation >(rotateicons_);
@@ -22157,7 +22142,7 @@ inline ::simData::IconRotation PlatformPrefs::rotateicons() const {
 }
 inline void PlatformPrefs::_internal_set_rotateicons(::simData::IconRotation value) {
   assert(::simData::IconRotation_IsValid(value));
-  _has_bits_[1] |= 0x00040000u;
+  _has_bits_[1] |= 0x00020000u;
   rotateicons_ = value;
 }
 inline void PlatformPrefs::set_rotateicons(::simData::IconRotation value) {
@@ -22167,7 +22152,7 @@ inline void PlatformPrefs::set_rotateicons(::simData::IconRotation value) {
 
 // optional bool noDepthIcons = 5 [default = true];
 inline bool PlatformPrefs::_internal_has_nodepthicons() const {
-  bool value = (_has_bits_[1] & 0x00080000u) != 0;
+  bool value = (_has_bits_[1] & 0x00040000u) != 0;
   return value;
 }
 inline bool PlatformPrefs::has_nodepthicons() const {
@@ -22175,7 +22160,7 @@ inline bool PlatformPrefs::has_nodepthicons() const {
 }
 inline void PlatformPrefs::clear_nodepthicons() {
   nodepthicons_ = true;
-  _has_bits_[1] &= ~0x00080000u;
+  _has_bits_[1] &= ~0x00040000u;
 }
 inline bool PlatformPrefs::_internal_nodepthicons() const {
   return nodepthicons_;
@@ -22185,7 +22170,7 @@ inline bool PlatformPrefs::nodepthicons() const {
   return _internal_nodepthicons();
 }
 inline void PlatformPrefs::_internal_set_nodepthicons(bool value) {
-  _has_bits_[1] |= 0x00080000u;
+  _has_bits_[1] |= 0x00040000u;
   nodepthicons_ = value;
 }
 inline void PlatformPrefs::set_nodepthicons(bool value) {
@@ -22195,7 +22180,7 @@ inline void PlatformPrefs::set_nodepthicons(bool value) {
 
 // optional .simData.TextAlignment iconAlignment = 63 [default = ALIGN_CENTER_CENTER];
 inline bool PlatformPrefs::_internal_has_iconalignment() const {
-  bool value = (_has_bits_[2] & 0x00000010u) != 0;
+  bool value = (_has_bits_[2] & 0x00000008u) != 0;
   return value;
 }
 inline bool PlatformPrefs::has_iconalignment() const {
@@ -22203,7 +22188,7 @@ inline bool PlatformPrefs::has_iconalignment() const {
 }
 inline void PlatformPrefs::clear_iconalignment() {
   iconalignment_ = 4;
-  _has_bits_[2] &= ~0x00000010u;
+  _has_bits_[2] &= ~0x00000008u;
 }
 inline ::simData::TextAlignment PlatformPrefs::_internal_iconalignment() const {
   return static_cast< ::simData::TextAlignment >(iconalignment_);
@@ -22214,7 +22199,7 @@ inline ::simData::TextAlignment PlatformPrefs::iconalignment() const {
 }
 inline void PlatformPrefs::_internal_set_iconalignment(::simData::TextAlignment value) {
   assert(::simData::TextAlignment_IsValid(value));
-  _has_bits_[2] |= 0x00000010u;
+  _has_bits_[2] |= 0x00000008u;
   iconalignment_ = value;
 }
 inline void PlatformPrefs::set_iconalignment(::simData::TextAlignment value) {
@@ -22335,7 +22320,7 @@ inline void PlatformPrefs::set_useclampalt(bool value) {
 
 // optional double clampValAltMin = 8 [default = -100000];
 inline bool PlatformPrefs::_internal_has_clampvalaltmin() const {
-  bool value = (_has_bits_[1] & 0x00010000u) != 0;
+  bool value = (_has_bits_[1] & 0x00008000u) != 0;
   return value;
 }
 inline bool PlatformPrefs::has_clampvalaltmin() const {
@@ -22343,7 +22328,7 @@ inline bool PlatformPrefs::has_clampvalaltmin() const {
 }
 inline void PlatformPrefs::clear_clampvalaltmin() {
   clampvalaltmin_ = -100000;
-  _has_bits_[1] &= ~0x00010000u;
+  _has_bits_[1] &= ~0x00008000u;
 }
 inline double PlatformPrefs::_internal_clampvalaltmin() const {
   return clampvalaltmin_;
@@ -22353,7 +22338,7 @@ inline double PlatformPrefs::clampvalaltmin() const {
   return _internal_clampvalaltmin();
 }
 inline void PlatformPrefs::_internal_set_clampvalaltmin(double value) {
-  _has_bits_[1] |= 0x00010000u;
+  _has_bits_[1] |= 0x00008000u;
   clampvalaltmin_ = value;
 }
 inline void PlatformPrefs::set_clampvalaltmin(double value) {
@@ -22363,7 +22348,7 @@ inline void PlatformPrefs::set_clampvalaltmin(double value) {
 
 // optional double clampValAltMax = 9 [default = 1000000000];
 inline bool PlatformPrefs::_internal_has_clampvalaltmax() const {
-  bool value = (_has_bits_[1] & 0x00020000u) != 0;
+  bool value = (_has_bits_[1] & 0x00010000u) != 0;
   return value;
 }
 inline bool PlatformPrefs::has_clampvalaltmax() const {
@@ -22371,7 +22356,7 @@ inline bool PlatformPrefs::has_clampvalaltmax() const {
 }
 inline void PlatformPrefs::clear_clampvalaltmax() {
   clampvalaltmax_ = 1000000000;
-  _has_bits_[1] &= ~0x00020000u;
+  _has_bits_[1] &= ~0x00010000u;
 }
 inline double PlatformPrefs::_internal_clampvalaltmax() const {
   return clampvalaltmax_;
@@ -22381,7 +22366,7 @@ inline double PlatformPrefs::clampvalaltmax() const {
   return _internal_clampvalaltmax();
 }
 inline void PlatformPrefs::_internal_set_clampvalaltmax(double value) {
-  _has_bits_[1] |= 0x00020000u;
+  _has_bits_[1] |= 0x00010000u;
   clampvalaltmax_ = value;
 }
 inline void PlatformPrefs::set_clampvalaltmax(double value) {
@@ -22643,7 +22628,7 @@ inline void PlatformPrefs::set_abovesurfaceclamping(bool value) {
 
 // optional bool lighted = 16 [default = true];
 inline bool PlatformPrefs::_internal_has_lighted() const {
-  bool value = (_has_bits_[1] & 0x00100000u) != 0;
+  bool value = (_has_bits_[1] & 0x00080000u) != 0;
   return value;
 }
 inline bool PlatformPrefs::has_lighted() const {
@@ -22651,7 +22636,7 @@ inline bool PlatformPrefs::has_lighted() const {
 }
 inline void PlatformPrefs::clear_lighted() {
   lighted_ = true;
-  _has_bits_[1] &= ~0x00100000u;
+  _has_bits_[1] &= ~0x00080000u;
 }
 inline bool PlatformPrefs::_internal_lighted() const {
   return lighted_;
@@ -22661,7 +22646,7 @@ inline bool PlatformPrefs::lighted() const {
   return _internal_lighted();
 }
 inline void PlatformPrefs::_internal_set_lighted(bool value) {
-  _has_bits_[1] |= 0x00100000u;
+  _has_bits_[1] |= 0x00080000u;
   lighted_ = value;
 }
 inline void PlatformPrefs::set_lighted(bool value) {
@@ -22811,7 +22796,7 @@ inline void PlatformPrefs::set_drawmoonvec(bool value) {
 
 // optional double axisScale = 22 [default = 1];
 inline bool PlatformPrefs::_internal_has_axisscale() const {
-  bool value = (_has_bits_[1] & 0x00800000u) != 0;
+  bool value = (_has_bits_[1] & 0x00400000u) != 0;
   return value;
 }
 inline bool PlatformPrefs::has_axisscale() const {
@@ -22819,7 +22804,7 @@ inline bool PlatformPrefs::has_axisscale() const {
 }
 inline void PlatformPrefs::clear_axisscale() {
   axisscale_ = 1;
-  _has_bits_[1] &= ~0x00800000u;
+  _has_bits_[1] &= ~0x00400000u;
 }
 inline double PlatformPrefs::_internal_axisscale() const {
   return axisscale_;
@@ -22829,7 +22814,7 @@ inline double PlatformPrefs::axisscale() const {
   return _internal_axisscale();
 }
 inline void PlatformPrefs::_internal_set_axisscale(double value) {
-  _has_bits_[1] |= 0x00800000u;
+  _has_bits_[1] |= 0x00400000u;
   axisscale_ = value;
 }
 inline void PlatformPrefs::set_axisscale(double value) {
@@ -23052,7 +23037,7 @@ inline void PlatformPrefs::set_draw3drcs(bool value) {
 
 // optional fixed32 rcsColor = 29 [default = 4294967168];
 inline bool PlatformPrefs::_internal_has_rcscolor() const {
-  bool value = (_has_bits_[1] & 0x01000000u) != 0;
+  bool value = (_has_bits_[1] & 0x00800000u) != 0;
   return value;
 }
 inline bool PlatformPrefs::has_rcscolor() const {
@@ -23060,7 +23045,7 @@ inline bool PlatformPrefs::has_rcscolor() const {
 }
 inline void PlatformPrefs::clear_rcscolor() {
   rcscolor_ = 4294967168u;
-  _has_bits_[1] &= ~0x01000000u;
+  _has_bits_[1] &= ~0x00800000u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::uint32 PlatformPrefs::_internal_rcscolor() const {
   return rcscolor_;
@@ -23070,7 +23055,7 @@ inline ::PROTOBUF_NAMESPACE_ID::uint32 PlatformPrefs::rcscolor() const {
   return _internal_rcscolor();
 }
 inline void PlatformPrefs::_internal_set_rcscolor(::PROTOBUF_NAMESPACE_ID::uint32 value) {
-  _has_bits_[1] |= 0x01000000u;
+  _has_bits_[1] |= 0x00800000u;
   rcscolor_ = value;
 }
 inline void PlatformPrefs::set_rcscolor(::PROTOBUF_NAMESPACE_ID::uint32 value) {
@@ -23165,7 +23150,7 @@ inline void PlatformPrefs::set_rcselevation(double value) {
 
 // optional double rcsFrequency = 33 [default = 7000];
 inline bool PlatformPrefs::_internal_has_rcsfrequency() const {
-  bool value = (_has_bits_[1] & 0x04000000u) != 0;
+  bool value = (_has_bits_[1] & 0x02000000u) != 0;
   return value;
 }
 inline bool PlatformPrefs::has_rcsfrequency() const {
@@ -23173,7 +23158,7 @@ inline bool PlatformPrefs::has_rcsfrequency() const {
 }
 inline void PlatformPrefs::clear_rcsfrequency() {
   rcsfrequency_ = 7000;
-  _has_bits_[1] &= ~0x04000000u;
+  _has_bits_[1] &= ~0x02000000u;
 }
 inline double PlatformPrefs::_internal_rcsfrequency() const {
   return rcsfrequency_;
@@ -23183,7 +23168,7 @@ inline double PlatformPrefs::rcsfrequency() const {
   return _internal_rcsfrequency();
 }
 inline void PlatformPrefs::_internal_set_rcsfrequency(double value) {
-  _has_bits_[1] |= 0x04000000u;
+  _has_bits_[1] |= 0x02000000u;
   rcsfrequency_ = value;
 }
 inline void PlatformPrefs::set_rcsfrequency(double value) {
@@ -23193,7 +23178,7 @@ inline void PlatformPrefs::set_rcsfrequency(double value) {
 
 // optional double rcsDetail = 34 [default = 1];
 inline bool PlatformPrefs::_internal_has_rcsdetail() const {
-  bool value = (_has_bits_[1] & 0x08000000u) != 0;
+  bool value = (_has_bits_[1] & 0x04000000u) != 0;
   return value;
 }
 inline bool PlatformPrefs::has_rcsdetail() const {
@@ -23201,7 +23186,7 @@ inline bool PlatformPrefs::has_rcsdetail() const {
 }
 inline void PlatformPrefs::clear_rcsdetail() {
   rcsdetail_ = 1;
-  _has_bits_[1] &= ~0x08000000u;
+  _has_bits_[1] &= ~0x04000000u;
 }
 inline double PlatformPrefs::_internal_rcsdetail() const {
   return rcsdetail_;
@@ -23211,7 +23196,7 @@ inline double PlatformPrefs::rcsdetail() const {
   return _internal_rcsdetail();
 }
 inline void PlatformPrefs::_internal_set_rcsdetail(double value) {
-  _has_bits_[1] |= 0x08000000u;
+  _has_bits_[1] |= 0x04000000u;
   rcsdetail_ = value;
 }
 inline void PlatformPrefs::set_rcsdetail(double value) {
@@ -23249,7 +23234,7 @@ inline void PlatformPrefs::set_drawcirclehilight(bool value) {
 
 // optional fixed32 circleHilightColor = 36 [default = 4294967295];
 inline bool PlatformPrefs::_internal_has_circlehilightcolor() const {
-  bool value = (_has_bits_[1] & 0x02000000u) != 0;
+  bool value = (_has_bits_[1] & 0x01000000u) != 0;
   return value;
 }
 inline bool PlatformPrefs::has_circlehilightcolor() const {
@@ -23257,7 +23242,7 @@ inline bool PlatformPrefs::has_circlehilightcolor() const {
 }
 inline void PlatformPrefs::clear_circlehilightcolor() {
   circlehilightcolor_ = 4294967295u;
-  _has_bits_[1] &= ~0x02000000u;
+  _has_bits_[1] &= ~0x01000000u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::uint32 PlatformPrefs::_internal_circlehilightcolor() const {
   return circlehilightcolor_;
@@ -23267,7 +23252,7 @@ inline ::PROTOBUF_NAMESPACE_ID::uint32 PlatformPrefs::circlehilightcolor() const
   return _internal_circlehilightcolor();
 }
 inline void PlatformPrefs::_internal_set_circlehilightcolor(::PROTOBUF_NAMESPACE_ID::uint32 value) {
-  _has_bits_[1] |= 0x02000000u;
+  _has_bits_[1] |= 0x01000000u;
   circlehilightcolor_ = value;
 }
 inline void PlatformPrefs::set_circlehilightcolor(::PROTOBUF_NAMESPACE_ID::uint32 value) {
@@ -23277,7 +23262,7 @@ inline void PlatformPrefs::set_circlehilightcolor(::PROTOBUF_NAMESPACE_ID::uint3
 
 // optional .simData.CircleHilightShape circleHilightShape = 71 [default = CH_PULSING_CIRCLE];
 inline bool PlatformPrefs::_internal_has_circlehilightshape() const {
-  bool value = (_has_bits_[1] & 0x00004000u) != 0;
+  bool value = (_has_bits_[1] & 0x00002000u) != 0;
   return value;
 }
 inline bool PlatformPrefs::has_circlehilightshape() const {
@@ -23285,7 +23270,7 @@ inline bool PlatformPrefs::has_circlehilightshape() const {
 }
 inline void PlatformPrefs::clear_circlehilightshape() {
   circlehilightshape_ = 0;
-  _has_bits_[1] &= ~0x00004000u;
+  _has_bits_[1] &= ~0x00002000u;
 }
 inline ::simData::CircleHilightShape PlatformPrefs::_internal_circlehilightshape() const {
   return static_cast< ::simData::CircleHilightShape >(circlehilightshape_);
@@ -23296,7 +23281,7 @@ inline ::simData::CircleHilightShape PlatformPrefs::circlehilightshape() const {
 }
 inline void PlatformPrefs::_internal_set_circlehilightshape(::simData::CircleHilightShape value) {
   assert(::simData::CircleHilightShape_IsValid(value));
-  _has_bits_[1] |= 0x00004000u;
+  _has_bits_[1] |= 0x00002000u;
   circlehilightshape_ = value;
 }
 inline void PlatformPrefs::set_circlehilightshape(::simData::CircleHilightShape value) {
@@ -23304,37 +23289,9 @@ inline void PlatformPrefs::set_circlehilightshape(::simData::CircleHilightShape 
   // @@protoc_insertion_point(field_set:simData.PlatformPrefs.circleHilightShape)
 }
 
-// optional double circleHilightSize = 75 [default = 0];
-inline bool PlatformPrefs::_internal_has_circlehilightsize() const {
-  bool value = (_has_bits_[1] & 0x00002000u) != 0;
-  return value;
-}
-inline bool PlatformPrefs::has_circlehilightsize() const {
-  return _internal_has_circlehilightsize();
-}
-inline void PlatformPrefs::clear_circlehilightsize() {
-  circlehilightsize_ = 0;
-  _has_bits_[1] &= ~0x00002000u;
-}
-inline double PlatformPrefs::_internal_circlehilightsize() const {
-  return circlehilightsize_;
-}
-inline double PlatformPrefs::circlehilightsize() const {
-  // @@protoc_insertion_point(field_get:simData.PlatformPrefs.circleHilightSize)
-  return _internal_circlehilightsize();
-}
-inline void PlatformPrefs::_internal_set_circlehilightsize(double value) {
-  _has_bits_[1] |= 0x00002000u;
-  circlehilightsize_ = value;
-}
-inline void PlatformPrefs::set_circlehilightsize(double value) {
-  _internal_set_circlehilightsize(value);
-  // @@protoc_insertion_point(field_set:simData.PlatformPrefs.circleHilightSize)
-}
-
 // optional bool interpolatePos = 37 [default = true];
 inline bool PlatformPrefs::_internal_has_interpolatepos() const {
-  bool value = (_has_bits_[1] & 0x00200000u) != 0;
+  bool value = (_has_bits_[1] & 0x00100000u) != 0;
   return value;
 }
 inline bool PlatformPrefs::has_interpolatepos() const {
@@ -23342,7 +23299,7 @@ inline bool PlatformPrefs::has_interpolatepos() const {
 }
 inline void PlatformPrefs::clear_interpolatepos() {
   interpolatepos_ = true;
-  _has_bits_[1] &= ~0x00200000u;
+  _has_bits_[1] &= ~0x00100000u;
 }
 inline bool PlatformPrefs::_internal_interpolatepos() const {
   return interpolatepos_;
@@ -23352,7 +23309,7 @@ inline bool PlatformPrefs::interpolatepos() const {
   return _internal_interpolatepos();
 }
 inline void PlatformPrefs::_internal_set_interpolatepos(bool value) {
-  _has_bits_[1] |= 0x00200000u;
+  _has_bits_[1] |= 0x00100000u;
   interpolatepos_ = value;
 }
 inline void PlatformPrefs::set_interpolatepos(bool value) {
@@ -23390,7 +23347,7 @@ inline void PlatformPrefs::set_extrapolatepos(bool value) {
 
 // optional double scale = 39 [default = 1];
 inline bool PlatformPrefs::_internal_has_scale() const {
-  bool value = (_has_bits_[1] & 0x10000000u) != 0;
+  bool value = (_has_bits_[1] & 0x08000000u) != 0;
   return value;
 }
 inline bool PlatformPrefs::has_scale() const {
@@ -23398,7 +23355,7 @@ inline bool PlatformPrefs::has_scale() const {
 }
 inline void PlatformPrefs::clear_scale() {
   scale_ = 1;
-  _has_bits_[1] &= ~0x10000000u;
+  _has_bits_[1] &= ~0x08000000u;
 }
 inline double PlatformPrefs::_internal_scale() const {
   return scale_;
@@ -23408,7 +23365,7 @@ inline double PlatformPrefs::scale() const {
   return _internal_scale();
 }
 inline void PlatformPrefs::_internal_set_scale(double value) {
-  _has_bits_[1] |= 0x10000000u;
+  _has_bits_[1] |= 0x08000000u;
   scale_ = value;
 }
 inline void PlatformPrefs::set_scale(double value) {
@@ -23418,7 +23375,7 @@ inline void PlatformPrefs::set_scale(double value) {
 
 // optional int32 brightness = 40 [default = 36];
 inline bool PlatformPrefs::_internal_has_brightness() const {
-  bool value = (_has_bits_[1] & 0x40000000u) != 0;
+  bool value = (_has_bits_[1] & 0x20000000u) != 0;
   return value;
 }
 inline bool PlatformPrefs::has_brightness() const {
@@ -23426,7 +23383,7 @@ inline bool PlatformPrefs::has_brightness() const {
 }
 inline void PlatformPrefs::clear_brightness() {
   brightness_ = 36;
-  _has_bits_[1] &= ~0x40000000u;
+  _has_bits_[1] &= ~0x20000000u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::int32 PlatformPrefs::_internal_brightness() const {
   return brightness_;
@@ -23436,7 +23393,7 @@ inline ::PROTOBUF_NAMESPACE_ID::int32 PlatformPrefs::brightness() const {
   return _internal_brightness();
 }
 inline void PlatformPrefs::_internal_set_brightness(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _has_bits_[1] |= 0x40000000u;
+  _has_bits_[1] |= 0x20000000u;
   brightness_ = value;
 }
 inline void PlatformPrefs::set_brightness(::PROTOBUF_NAMESPACE_ID::int32 value) {
@@ -23502,7 +23459,7 @@ inline void PlatformPrefs::set_dynamicscaleoffset(double value) {
 
 // optional double dynamicScaleScalar = 43 [default = 1];
 inline bool PlatformPrefs::_internal_has_dynamicscalescalar() const {
-  bool value = (_has_bits_[1] & 0x20000000u) != 0;
+  bool value = (_has_bits_[1] & 0x10000000u) != 0;
   return value;
 }
 inline bool PlatformPrefs::has_dynamicscalescalar() const {
@@ -23510,7 +23467,7 @@ inline bool PlatformPrefs::has_dynamicscalescalar() const {
 }
 inline void PlatformPrefs::clear_dynamicscalescalar() {
   dynamicscalescalar_ = 1;
-  _has_bits_[1] &= ~0x20000000u;
+  _has_bits_[1] &= ~0x10000000u;
 }
 inline double PlatformPrefs::_internal_dynamicscalescalar() const {
   return dynamicscalescalar_;
@@ -23520,7 +23477,7 @@ inline double PlatformPrefs::dynamicscalescalar() const {
   return _internal_dynamicscalescalar();
 }
 inline void PlatformPrefs::_internal_set_dynamicscalescalar(double value) {
-  _has_bits_[1] |= 0x20000000u;
+  _has_bits_[1] |= 0x10000000u;
   dynamicscalescalar_ = value;
 }
 inline void PlatformPrefs::set_dynamicscalescalar(double value) {
@@ -23530,7 +23487,7 @@ inline void PlatformPrefs::set_dynamicscalescalar(double value) {
 
 // optional .simData.DynamicScaleAlgorithm dynamicScaleAlgorithm = 74 [default = DSA_METERS_TO_PIXELS];
 inline bool PlatformPrefs::_internal_has_dynamicscalealgorithm() const {
-  bool value = (_has_bits_[1] & 0x00008000u) != 0;
+  bool value = (_has_bits_[1] & 0x00004000u) != 0;
   return value;
 }
 inline bool PlatformPrefs::has_dynamicscalealgorithm() const {
@@ -23538,7 +23495,7 @@ inline bool PlatformPrefs::has_dynamicscalealgorithm() const {
 }
 inline void PlatformPrefs::clear_dynamicscalealgorithm() {
   dynamicscalealgorithm_ = 1;
-  _has_bits_[1] &= ~0x00008000u;
+  _has_bits_[1] &= ~0x00004000u;
 }
 inline ::simData::DynamicScaleAlgorithm PlatformPrefs::_internal_dynamicscalealgorithm() const {
   return static_cast< ::simData::DynamicScaleAlgorithm >(dynamicscalealgorithm_);
@@ -23549,7 +23506,7 @@ inline ::simData::DynamicScaleAlgorithm PlatformPrefs::dynamicscalealgorithm() c
 }
 inline void PlatformPrefs::_internal_set_dynamicscalealgorithm(::simData::DynamicScaleAlgorithm value) {
   assert(::simData::DynamicScaleAlgorithm_IsValid(value));
-  _has_bits_[1] |= 0x00008000u;
+  _has_bits_[1] |= 0x00004000u;
   dynamicscalealgorithm_ = value;
 }
 inline void PlatformPrefs::set_dynamicscalealgorithm(::simData::DynamicScaleAlgorithm value) {
@@ -23587,7 +23544,7 @@ inline void PlatformPrefs::set_drawvelocityvec(bool value) {
 
 // optional fixed32 velVecColor = 72 [default = 4286578943];
 inline bool PlatformPrefs::_internal_has_velveccolor() const {
-  bool value = (_has_bits_[2] & 0x00000200u) != 0;
+  bool value = (_has_bits_[2] & 0x00000100u) != 0;
   return value;
 }
 inline bool PlatformPrefs::has_velveccolor() const {
@@ -23595,7 +23552,7 @@ inline bool PlatformPrefs::has_velveccolor() const {
 }
 inline void PlatformPrefs::clear_velveccolor() {
   velveccolor_ = 4286578943u;
-  _has_bits_[2] &= ~0x00000200u;
+  _has_bits_[2] &= ~0x00000100u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::uint32 PlatformPrefs::_internal_velveccolor() const {
   return velveccolor_;
@@ -23605,7 +23562,7 @@ inline ::PROTOBUF_NAMESPACE_ID::uint32 PlatformPrefs::velveccolor() const {
   return _internal_velveccolor();
 }
 inline void PlatformPrefs::_internal_set_velveccolor(::PROTOBUF_NAMESPACE_ID::uint32 value) {
-  _has_bits_[2] |= 0x00000200u;
+  _has_bits_[2] |= 0x00000100u;
   velveccolor_ = value;
 }
 inline void PlatformPrefs::set_velveccolor(::PROTOBUF_NAMESPACE_ID::uint32 value) {
@@ -23615,7 +23572,7 @@ inline void PlatformPrefs::set_velveccolor(::PROTOBUF_NAMESPACE_ID::uint32 value
 
 // optional bool velVecUseStaticLength = 45 [default = true];
 inline bool PlatformPrefs::_internal_has_velvecusestaticlength() const {
-  bool value = (_has_bits_[1] & 0x00400000u) != 0;
+  bool value = (_has_bits_[1] & 0x00200000u) != 0;
   return value;
 }
 inline bool PlatformPrefs::has_velvecusestaticlength() const {
@@ -23623,7 +23580,7 @@ inline bool PlatformPrefs::has_velvecusestaticlength() const {
 }
 inline void PlatformPrefs::clear_velvecusestaticlength() {
   velvecusestaticlength_ = true;
-  _has_bits_[1] &= ~0x00400000u;
+  _has_bits_[1] &= ~0x00200000u;
 }
 inline bool PlatformPrefs::_internal_velvecusestaticlength() const {
   return velvecusestaticlength_;
@@ -23633,7 +23590,7 @@ inline bool PlatformPrefs::velvecusestaticlength() const {
   return _internal_velvecusestaticlength();
 }
 inline void PlatformPrefs::_internal_set_velvecusestaticlength(bool value) {
-  _has_bits_[1] |= 0x00400000u;
+  _has_bits_[1] |= 0x00200000u;
   velvecusestaticlength_ = value;
 }
 inline void PlatformPrefs::set_velvecusestaticlength(bool value) {
@@ -23643,7 +23600,7 @@ inline void PlatformPrefs::set_velvecusestaticlength(bool value) {
 
 // optional double velVecStaticLen = 46 [default = 0.5];
 inline bool PlatformPrefs::_internal_has_velvecstaticlen() const {
-  bool value = (_has_bits_[2] & 0x00000001u) != 0;
+  bool value = (_has_bits_[1] & 0x80000000u) != 0;
   return value;
 }
 inline bool PlatformPrefs::has_velvecstaticlen() const {
@@ -23651,7 +23608,7 @@ inline bool PlatformPrefs::has_velvecstaticlen() const {
 }
 inline void PlatformPrefs::clear_velvecstaticlen() {
   velvecstaticlen_ = 0.5;
-  _has_bits_[2] &= ~0x00000001u;
+  _has_bits_[1] &= ~0x80000000u;
 }
 inline double PlatformPrefs::_internal_velvecstaticlen() const {
   return velvecstaticlen_;
@@ -23661,7 +23618,7 @@ inline double PlatformPrefs::velvecstaticlen() const {
   return _internal_velvecstaticlen();
 }
 inline void PlatformPrefs::_internal_set_velvecstaticlen(double value) {
-  _has_bits_[2] |= 0x00000001u;
+  _has_bits_[1] |= 0x80000000u;
   velvecstaticlen_ = value;
 }
 inline void PlatformPrefs::set_velvecstaticlen(double value) {
@@ -23671,7 +23628,7 @@ inline void PlatformPrefs::set_velvecstaticlen(double value) {
 
 // optional .simData.DistanceUnits velVecStaticLenUnits = 47 [default = UNITS_NAUTICAL_MILES];
 inline bool PlatformPrefs::_internal_has_velvecstaticlenunits() const {
-  bool value = (_has_bits_[1] & 0x80000000u) != 0;
+  bool value = (_has_bits_[1] & 0x40000000u) != 0;
   return value;
 }
 inline bool PlatformPrefs::has_velvecstaticlenunits() const {
@@ -23679,7 +23636,7 @@ inline bool PlatformPrefs::has_velvecstaticlenunits() const {
 }
 inline void PlatformPrefs::clear_velvecstaticlenunits() {
   velvecstaticlenunits_ = 26;
-  _has_bits_[1] &= ~0x80000000u;
+  _has_bits_[1] &= ~0x40000000u;
 }
 inline ::simData::DistanceUnits PlatformPrefs::_internal_velvecstaticlenunits() const {
   return static_cast< ::simData::DistanceUnits >(velvecstaticlenunits_);
@@ -23690,7 +23647,7 @@ inline ::simData::DistanceUnits PlatformPrefs::velvecstaticlenunits() const {
 }
 inline void PlatformPrefs::_internal_set_velvecstaticlenunits(::simData::DistanceUnits value) {
   assert(::simData::DistanceUnits_IsValid(value));
-  _has_bits_[1] |= 0x80000000u;
+  _has_bits_[1] |= 0x40000000u;
   velvecstaticlenunits_ = value;
 }
 inline void PlatformPrefs::set_velvecstaticlenunits(::simData::DistanceUnits value) {
@@ -23700,7 +23657,7 @@ inline void PlatformPrefs::set_velvecstaticlenunits(::simData::DistanceUnits val
 
 // optional double velVecTime = 48 [default = 1];
 inline bool PlatformPrefs::_internal_has_velvectime() const {
-  bool value = (_has_bits_[2] & 0x00000002u) != 0;
+  bool value = (_has_bits_[2] & 0x00000001u) != 0;
   return value;
 }
 inline bool PlatformPrefs::has_velvectime() const {
@@ -23708,7 +23665,7 @@ inline bool PlatformPrefs::has_velvectime() const {
 }
 inline void PlatformPrefs::clear_velvectime() {
   velvectime_ = 1;
-  _has_bits_[2] &= ~0x00000002u;
+  _has_bits_[2] &= ~0x00000001u;
 }
 inline double PlatformPrefs::_internal_velvectime() const {
   return velvectime_;
@@ -23718,7 +23675,7 @@ inline double PlatformPrefs::velvectime() const {
   return _internal_velvectime();
 }
 inline void PlatformPrefs::_internal_set_velvectime(double value) {
-  _has_bits_[2] |= 0x00000002u;
+  _has_bits_[2] |= 0x00000001u;
   velvectime_ = value;
 }
 inline void PlatformPrefs::set_velvectime(double value) {
@@ -23728,7 +23685,7 @@ inline void PlatformPrefs::set_velvectime(double value) {
 
 // optional .simData.ElapsedTimeFormat velVecTimeUnits = 62 [default = ELAPSED_SECONDS];
 inline bool PlatformPrefs::_internal_has_velvectimeunits() const {
-  bool value = (_has_bits_[2] & 0x00000008u) != 0;
+  bool value = (_has_bits_[2] & 0x00000004u) != 0;
   return value;
 }
 inline bool PlatformPrefs::has_velvectimeunits() const {
@@ -23736,7 +23693,7 @@ inline bool PlatformPrefs::has_velvectimeunits() const {
 }
 inline void PlatformPrefs::clear_velvectimeunits() {
   velvectimeunits_ = 1;
-  _has_bits_[2] &= ~0x00000008u;
+  _has_bits_[2] &= ~0x00000004u;
 }
 inline ::simData::ElapsedTimeFormat PlatformPrefs::_internal_velvectimeunits() const {
   return static_cast< ::simData::ElapsedTimeFormat >(velvectimeunits_);
@@ -23747,7 +23704,7 @@ inline ::simData::ElapsedTimeFormat PlatformPrefs::velvectimeunits() const {
 }
 inline void PlatformPrefs::_internal_set_velvectimeunits(::simData::ElapsedTimeFormat value) {
   assert(::simData::ElapsedTimeFormat_IsValid(value));
-  _has_bits_[2] |= 0x00000008u;
+  _has_bits_[2] |= 0x00000004u;
   velvectimeunits_ = value;
 }
 inline void PlatformPrefs::set_velvectimeunits(::simData::ElapsedTimeFormat value) {
@@ -24194,7 +24151,7 @@ inline void PlatformPrefs::set_polygonmodeface(::simData::PolygonFace value) {
 
 // optional .simData.PolygonMode polygonMode = 57 [default = FILL];
 inline bool PlatformPrefs::_internal_has_polygonmode() const {
-  bool value = (_has_bits_[2] & 0x00000004u) != 0;
+  bool value = (_has_bits_[2] & 0x00000002u) != 0;
   return value;
 }
 inline bool PlatformPrefs::has_polygonmode() const {
@@ -24202,7 +24159,7 @@ inline bool PlatformPrefs::has_polygonmode() const {
 }
 inline void PlatformPrefs::clear_polygonmode() {
   polygonmode_ = 6914;
-  _has_bits_[2] &= ~0x00000004u;
+  _has_bits_[2] &= ~0x00000002u;
 }
 inline ::simData::PolygonMode PlatformPrefs::_internal_polygonmode() const {
   return static_cast< ::simData::PolygonMode >(polygonmode_);
@@ -24213,7 +24170,7 @@ inline ::simData::PolygonMode PlatformPrefs::polygonmode() const {
 }
 inline void PlatformPrefs::_internal_set_polygonmode(::simData::PolygonMode value) {
   assert(::simData::PolygonMode_IsValid(value));
-  _has_bits_[2] |= 0x00000004u;
+  _has_bits_[2] |= 0x00000002u;
   polygonmode_ = value;
 }
 inline void PlatformPrefs::set_polygonmode(::simData::PolygonMode value) {
@@ -24279,7 +24236,7 @@ inline void PlatformPrefs::set_polygonstipple(::PROTOBUF_NAMESPACE_ID::uint32 va
 
 // optional fixed32 visibleLosColor = 64 [default = 16711808];
 inline bool PlatformPrefs::_internal_has_visibleloscolor() const {
-  bool value = (_has_bits_[2] & 0x00000020u) != 0;
+  bool value = (_has_bits_[2] & 0x00000010u) != 0;
   return value;
 }
 inline bool PlatformPrefs::has_visibleloscolor() const {
@@ -24287,7 +24244,7 @@ inline bool PlatformPrefs::has_visibleloscolor() const {
 }
 inline void PlatformPrefs::clear_visibleloscolor() {
   visibleloscolor_ = 16711808u;
-  _has_bits_[2] &= ~0x00000020u;
+  _has_bits_[2] &= ~0x00000010u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::uint32 PlatformPrefs::_internal_visibleloscolor() const {
   return visibleloscolor_;
@@ -24297,7 +24254,7 @@ inline ::PROTOBUF_NAMESPACE_ID::uint32 PlatformPrefs::visibleloscolor() const {
   return _internal_visibleloscolor();
 }
 inline void PlatformPrefs::_internal_set_visibleloscolor(::PROTOBUF_NAMESPACE_ID::uint32 value) {
-  _has_bits_[2] |= 0x00000020u;
+  _has_bits_[2] |= 0x00000010u;
   visibleloscolor_ = value;
 }
 inline void PlatformPrefs::set_visibleloscolor(::PROTOBUF_NAMESPACE_ID::uint32 value) {
@@ -24307,7 +24264,7 @@ inline void PlatformPrefs::set_visibleloscolor(::PROTOBUF_NAMESPACE_ID::uint32 v
 
 // optional fixed32 obstructedLosColor = 65 [default = 4278190208];
 inline bool PlatformPrefs::_internal_has_obstructedloscolor() const {
-  bool value = (_has_bits_[2] & 0x00000100u) != 0;
+  bool value = (_has_bits_[2] & 0x00000080u) != 0;
   return value;
 }
 inline bool PlatformPrefs::has_obstructedloscolor() const {
@@ -24315,7 +24272,7 @@ inline bool PlatformPrefs::has_obstructedloscolor() const {
 }
 inline void PlatformPrefs::clear_obstructedloscolor() {
   obstructedloscolor_ = 4278190208u;
-  _has_bits_[2] &= ~0x00000100u;
+  _has_bits_[2] &= ~0x00000080u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::uint32 PlatformPrefs::_internal_obstructedloscolor() const {
   return obstructedloscolor_;
@@ -24325,7 +24282,7 @@ inline ::PROTOBUF_NAMESPACE_ID::uint32 PlatformPrefs::obstructedloscolor() const
   return _internal_obstructedloscolor();
 }
 inline void PlatformPrefs::_internal_set_obstructedloscolor(::PROTOBUF_NAMESPACE_ID::uint32 value) {
-  _has_bits_[2] |= 0x00000100u;
+  _has_bits_[2] |= 0x00000080u;
   obstructedloscolor_ = value;
 }
 inline void PlatformPrefs::set_obstructedloscolor(::PROTOBUF_NAMESPACE_ID::uint32 value) {
@@ -24335,7 +24292,7 @@ inline void PlatformPrefs::set_obstructedloscolor(::PROTOBUF_NAMESPACE_ID::uint3
 
 // optional double losRangeResolution = 66 [default = 1000];
 inline bool PlatformPrefs::_internal_has_losrangeresolution() const {
-  bool value = (_has_bits_[2] & 0x00000040u) != 0;
+  bool value = (_has_bits_[2] & 0x00000020u) != 0;
   return value;
 }
 inline bool PlatformPrefs::has_losrangeresolution() const {
@@ -24343,7 +24300,7 @@ inline bool PlatformPrefs::has_losrangeresolution() const {
 }
 inline void PlatformPrefs::clear_losrangeresolution() {
   losrangeresolution_ = 1000;
-  _has_bits_[2] &= ~0x00000040u;
+  _has_bits_[2] &= ~0x00000020u;
 }
 inline double PlatformPrefs::_internal_losrangeresolution() const {
   return losrangeresolution_;
@@ -24353,7 +24310,7 @@ inline double PlatformPrefs::losrangeresolution() const {
   return _internal_losrangeresolution();
 }
 inline void PlatformPrefs::_internal_set_losrangeresolution(double value) {
-  _has_bits_[2] |= 0x00000040u;
+  _has_bits_[2] |= 0x00000020u;
   losrangeresolution_ = value;
 }
 inline void PlatformPrefs::set_losrangeresolution(double value) {
@@ -24363,7 +24320,7 @@ inline void PlatformPrefs::set_losrangeresolution(double value) {
 
 // optional double losAzimuthalResolution = 67 [default = 15];
 inline bool PlatformPrefs::_internal_has_losazimuthalresolution() const {
-  bool value = (_has_bits_[2] & 0x00000080u) != 0;
+  bool value = (_has_bits_[2] & 0x00000040u) != 0;
   return value;
 }
 inline bool PlatformPrefs::has_losazimuthalresolution() const {
@@ -24371,7 +24328,7 @@ inline bool PlatformPrefs::has_losazimuthalresolution() const {
 }
 inline void PlatformPrefs::clear_losazimuthalresolution() {
   losazimuthalresolution_ = 15;
-  _has_bits_[2] &= ~0x00000080u;
+  _has_bits_[2] &= ~0x00000040u;
 }
 inline double PlatformPrefs::_internal_losazimuthalresolution() const {
   return losazimuthalresolution_;
@@ -24381,7 +24338,7 @@ inline double PlatformPrefs::losazimuthalresolution() const {
   return _internal_losazimuthalresolution();
 }
 inline void PlatformPrefs::_internal_set_losazimuthalresolution(double value) {
-  _has_bits_[2] |= 0x00000080u;
+  _has_bits_[2] |= 0x00000040u;
   losazimuthalresolution_ = value;
 }
 inline void PlatformPrefs::set_losazimuthalresolution(double value) {

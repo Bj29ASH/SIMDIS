@@ -24,7 +24,6 @@
 #define OSGEARTH_STATUS_H 1
 
 #include <osgEarth/Common>
-#include <string>
 
 namespace osgEarth
 {

@@ -647,6 +647,7 @@ namespace osgEarth
 
     private:
         osg::ref_ptr<TMSImageLayer> _imageLayer;
+        mutable ReadWriteMutex _mutex;
     };
 
 } // namespace osgEarth

@@ -32,9 +32,9 @@
 // ***********************************************************************
 
 #define SIMDIS_SDK_VERSION_MAJOR 1
-#define SIMDIS_SDK_VERSION_MINOR 17
+#define SIMDIS_SDK_VERSION_MINOR 16
 #define SIMDIS_SDK_VERSION_REVISION 0
-#define SIMDIS_SDK_SOVERSION 17
+#define SIMDIS_SDK_SOVERSION 16
 
 namespace simCore
 {

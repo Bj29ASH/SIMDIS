@@ -30,6 +30,7 @@
 #include "simQt/ColorGradient.h"
 
 class QGroupBox;
+class QSortFilterProxyModel;
 class QTreeView;
 class Ui_ColorGradientWidget;
 
@@ -128,15 +129,6 @@ private slots:
   /** Spawns a help dialog explaining the display widget */
   void showHelpDialog_();
 
-  /** Sets the gradient to default */
-  void setGradientDefault_();
-  /** Sets the gradient to darker */
-  void setGradientDarker_();
-  /** Sets the gradient to greyscale */
-  void setGradientGreyscale_();
-  /** Sets the gradient to doppler */
-  void setGradientDoppler_();
-
 private:
   /** Creates or destroys the stops table based on showTable_ flag */
   void showOrHideTable_();
@@ -149,6 +141,7 @@ private:
 
   class ColorGradientModel;
   ColorGradientModel* model_;
+  QSortFilterProxyModel* proxyModel_;
 
   class GradientDisplayWidget;
   GradientDisplayWidget* display_;

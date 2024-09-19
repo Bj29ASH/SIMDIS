@@ -24,7 +24,6 @@
 #define OSGEARTH_UTIL_HTM_H 1
 
 #include <osgEarth/Common>
-#include <osgEarth/Units>
 #include <osg/Geode>
 #include <osg/Group>
 #include <osg/Polytope>
@@ -38,7 +37,8 @@ namespace osgEarth { namespace Contrib
     struct HTMSettings
     {
         unsigned _maxObjectsPerCell;
-        Distance _threshold;
+        optional<float> _rangeFactor;
+        optional<float> _maxRange;
         float _minCellSize;
         float _maxCellSize;
         bool _storeObjectsInLeavesOnly;
@@ -71,9 +71,12 @@ namespace osgEarth { namespace Contrib
         void setMaximumCellSize(double value) { _settings._maxCellSize = value; }
         double getMaximumCellSize() const { return _settings._maxCellSize; }
 
-        //! Range at which objects become visible.
-        //! If in linear units, treat as a max distance; if pixels, treat as a min SSE
-        void setThreshold(const Distance& value) { _settings._threshold = value; }
+        //! Cells become visible at (cell bounding radius * range factor).
+        //! If this is set, the value in setRange is ignored.
+        void setRangeFactor(float value) { _settings._rangeFactor = value; }
+
+        //! Range at which objects become visible. This overrides range factor if set.
+        void setMaxRange(float value) { _settings._maxRange = value; }
 
         //! If true, only store objects in the leaf nodes (defaults to false)
         void setStoreObjectsInLeavesOnly(bool value) { _settings._storeObjectsInLeavesOnly = value; }

@@ -24,7 +24,6 @@
 #include <osgEarth/Memory>
 #include <osgEarth/GLUtils>
 #include <osgEarth/ShaderLoader>
-#include <osgEarth/Registry>
 #include <chrono>
 #include <list>
 
@@ -43,13 +42,13 @@ namespace osgEarth
             bool _renderModelNormals;
             bool _renderWinding;
             bool _renderOutlines;
-            bool _showArenaControls;
+            bool _showConcurrency;
 
         public:
             SystemGUI() : BaseGUI("System"),
                 _renderViewNormals(false), _renderModelNormals(false),
                 _renderWinding(false), _renderOutlines(false),
-                _showArenaControls(false){ }
+                _showConcurrency(false){ }
 
             void load(const Config& conf) override
             {
@@ -68,44 +67,44 @@ namespace osgEarth
 
                 ImGui::Begin(name(), visible());
                 {
-                    auto pb = Memory::getProcessPrivateUsage();
-                    ImGui::Text("Mem Alloc: %.1lf MB",
-                        (double)(pb - osgEarth::g_startupPrivateBytes) / 1048576.0);
+                    double pb = (double)Memory::getProcessPrivateUsage() / 1048576.0;
+                    ImGui::Text("Mem PB: %.2lf MB", pb);
                     ImGui::SameLine();
-                    ImGui::Text(" Total: %.1lf MB", (double)pb / 1048576.0);
-                    //ImGui::Text("  WS: %u MB", (Memory::getProcessPhysicalUsage() / 1048576U));
+                    ImGui::Text("  WS: %u MB", (Memory::getProcessPhysicalUsage() / 1048576U));
+
+                    if (ImGui::SliderFloat("Font Scale", &ImGui::GetIO().FontGlobalScale, 0.5f, 4.0f))
+                        dirtySettings();
 
                     ImGui::Separator();
-                    ImGui::TextColored(ImVec4(1, 1, 0, 1), "Job Arenas:");
 
-                    if (ImGui::BeginTable("arenas", 2))
+                    if (ImGui::TreeNodeEx("Job Arenas", ImGuiTreeNodeFlags_DefaultOpen))
                     {
-                        const JobArena::Metrics& m = JobArena::allMetrics();
+                        ImGui::BeginTable("arenas", 2);
+                        const JobArena::Metrics& m = JobArena::metrics();
                         for (int i = 0; i <= m.maxArenaIndex; ++i)
                         {
-                            auto metrics = m.arena(i);
-                            if (metrics)
+                            if (m.arena(i).active)
                             {
                                 ImGui::TableNextColumn();
                                 ImGui::Text("%s",
-                                    metrics->arenaName.c_str());
+                                    m.arena(i).arenaName.c_str());
 
                                 ImGui::TableNextColumn();
                                 ImGui::Text("(%d) %d / %d // %d",
-                                    (int)metrics->concurrency,
-                                    (int)metrics->numJobsRunning,
-                                    (int)metrics->numJobsPending,
-                                    (int)metrics->numJobsCanceled);
+                                    (int)m.arena(i).concurrency,
+                                    (int)m.arena(i).numJobsRunning,
+                                    (int)m.arena(i).numJobsPending,
+                                    (int)m.arena(i).numJobsCanceled);
 
-                                if (_showArenaControls)
+                                if (_showConcurrency)
                                 {
                                     ImGui::TableNextColumn();
                                     ImGui::Text("  Concurrency:");
                                     ImGui::TableNextColumn();
                                     ImGui::PushID(i);
-                                    int concurrency = metrics->concurrency;
+                                    int concurrency = m.arena(i).concurrency;
                                     if (ImGui::SliderInt("", &concurrency, 1, 16)) {
-                                        JobArena::get(metrics->arenaName)->setConcurrency(concurrency);
+                                        JobArena::get(m.arena(i).arenaName)->setConcurrency(concurrency);
                                     }
                                     ImGui::PopID();
                                     ImGui::Separator();
@@ -113,29 +112,15 @@ namespace osgEarth
                             }
                         }
                         ImGui::EndTable();
+
+                        ImGui::Separator();
+                        ImGui::Text("Total: %d", m.totalJobs());
+                        ImGui::SameLine();
+                        ImGui::Text(" ICO: %d", GLObjectsCompiler::totalJobs());
+                        ImGui::Checkbox("Adjust concurrency", &_showConcurrency);
+
+                        ImGui::TreePop();
                     }
-                    ImGui::Separator();
-                    ImGui::Text("Total: %d", JobArena::allMetrics().totalJobs());
-                    ImGui::SameLine();
-
-                    int icojobs = 0;
-                    auto pager = view(ri)->getDatabasePager();
-                    if (pager) {
-                        auto ico = pager->getIncrementalCompileOperation();
-                        if (ico) {
-                            icojobs = ico->getToCompile().size();
-                        }
-                    }
-                    ImGui::Text(" ICO: %d", icojobs);
-                    ImGui::Checkbox("Advanced arena controls", &_showArenaControls);
-
-                    ImGui::Separator();
-
-                    if (ImGui::SliderFloat("Font Scale", &ImGui::GetIO().FontGlobalScale, 0.5f, 2.0f))
-                        dirtySettings();
-
-                    ImGui::Checkbox("Unref image data after apply",
-                        &Registry::instance()->unRefImageDataAfterApply().mutable_value());
                 }
                 ImGui::End();
             }

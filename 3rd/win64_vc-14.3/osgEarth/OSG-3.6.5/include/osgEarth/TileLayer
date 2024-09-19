@@ -198,24 +198,19 @@ namespace osgEarth
 
         /**
          * Data Extents reported for this layer are copied into output.
+         * Returns true on success, false is there are no extents to report.
          */
-        virtual void getDataExtents(DataExtentList& dataExtents) const;
-
-        /**
-        * Gets the number of data extents on the layer.
-        */
-        unsigned int getDataExtentsSize() const;
+        virtual const DataExtentList& getDataExtents() const;
 
         /**
          * Gets an extent that is the union of all the extents in getDataExtents().
          */
         const DataExtent& getDataExtentsUnion() const;
 
-        //! Assign a data extents collection to the layer
-        virtual void setDataExtents(const DataExtentList& dataExtents);
-
-        //! Adds a DataExent to this layer.
-        void addDataExtent(const DataExtent& dataExtent);
+        //! Assign a data extents collection to the layer if applicable.
+        //! This method may not be supported, or may only work for a layer that has
+        //! opened for writing.
+        virtual void setDataExtents(const DataExtentList&) { }
 
     public: // Layer interface
 
@@ -278,6 +273,9 @@ namespace osgEarth
         //! Gets or create a caching bin to use with data in the supplied profile
         CacheBin* getCacheBin(const Profile* profile);
 
+        //! Mutable access to the data extents for this layer
+        DataExtentList& dataExtents();
+
         //! Call this if you call dataExtents() and modify it.
         void dirtyDataExtents();
 
@@ -293,12 +291,8 @@ namespace osgEarth
         std::string getMetadataKey(const Profile*) const;
 
     private:
-        // general purpose data protector
-        mutable ReadWrite<Mutex> _data_mutex;
-
         DataExtentList _dataExtents;
         mutable DataExtent _dataExtentsUnion;
-        mutable void* _dataExtentsIndex;
 
         // The cache ID used at runtime. This will either be the cacheId found in
         // the TileLayerOptions, or a dynamic cacheID generated at runtime.

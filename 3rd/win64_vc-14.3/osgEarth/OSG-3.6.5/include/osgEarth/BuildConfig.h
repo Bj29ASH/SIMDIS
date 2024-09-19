@@ -2,8 +2,11 @@
 #ifndef OSGEARTH_BUILDCONFIG_H
 #define OSGEARTH_BUILDCONFIG_H
 
+// If C++11 is available there will be a define here:
+#define OSGEARTH_CXX11
+
 // The SOVERSION will be a define here:
-#define OSGEARTH_SOVERSION 144
+#define OSGEARTH_SOVERSION 128
 
 #endif // OSGEARTH_BUILDCONFIG_H
 

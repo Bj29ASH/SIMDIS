@@ -20,7 +20,6 @@
 #define OSGEARTH_COVERAGE_H 1
 
 #include <osgEarth/GeoData>
-#include <osgEarth/ImageUtils>
 #include <unordered_map>
 #include <vector>
 #include <map>
@@ -49,7 +48,7 @@ namespace osgEarth
     {
     public:
         using Ptr = std::shared_ptr<Coverage<T>>;
-        
+
         // maps T to index for duplicate values (std::map so that T doesn't need std::hash)
         using LUT = std::map<T, int>;
 
@@ -57,8 +56,7 @@ namespace osgEarth
         using RLUT = std::unordered_map<int, T>;
 
         // max out at 255 different indices. Make it a short if you want more.
-        // TODO: consider templatizing this with something like
-        // <typename T, typename Index=unsigned char>
+        // todo: consider templatizing this?
         using Index = unsigned char;
 
         // raster of indices
@@ -173,40 +171,18 @@ namespace osgEarth
 
         bool read(T& output, unsigned s, unsigned t) const
         {
-            const T* value = read(s, t);
-            if (value) output = *value;
-            return value != nullptr;
+            int ptr = t * _width + s;
+            Index i = _pixels[ptr];
+            bool found = (i > 0);
+            if (found) output = _rlut[i];
+            return found;
         }
 
         bool read(T& output, double u, double v) const
         {
-            const T* value = read(u, v);
-            if (value) output = *value;
-            return value != nullptr;
-        }
-
-        const T* read(unsigned s, unsigned t) const
-        {
-            int ptr = t * _width + s;
-            Index i = _pixels[ptr];
-            if (i > 0)
-            {
-                return &_rlut[i];
-            }
-            return nullptr;
-        }
-
-        const T* read(double u, double v) const
-        {
-            unsigned s, t;
-            ImageUtils::nnUVtoST(u, v, s, t, _width, _height);
-            return read(s, t);
-        }
-
-        bool hasDataAt(unsigned s, unsigned t) const
-        {
-            int ptr = t * _width + s;
-            return _pixels[ptr] > 0;
+            unsigned s = (unsigned)((double)(_width - 1) * u);
+            unsigned t = (unsigned)((double)(_height - 1) * v);
+            return read(output, s, t);
         }
 
     private:
@@ -233,31 +209,35 @@ namespace osgEarth
         //! @param coverage Coverage to include in the geocoverage
         //! @param extent geospatial extent of the coverage data
         GeoCoverage(typename Coverage<T>::Ptr coverage, const GeoExtent& extent)
-            : _coverage(coverage), _extent(extent), _valid(true)
+            : _coverage(coverage), _extent(extent)
         {
             if (coverage == nullptr)
-                _valid = false;
+                _status = Status::ResourceUnavailable;
         }
 
         GeoCoverage()
-            : _valid(false)
+            : _status(Status::ResourceUnavailable)
         {
             //nop
         }
 
-        inline bool valid() const {
-            return _valid;
+        Status getStatus() const {
+            return _status;
         }
 
-        inline unsigned s() const {
+        bool valid() const {
+            return _status == STATUS_OK;
+        }
+
+        unsigned s() const {
             return _coverage ? _coverage->s() : 0u;
         }
 
-        inline unsigned t() const {
+        unsigned t() const {
             return _coverage ? _coverage->t() : 0u;
         }
 
-        inline unsigned nodataCount() const {
+        unsigned nodataCount() const {
             return _coverage ? _coverage->nodataCount() : 0u;
         }
 
@@ -279,38 +259,9 @@ namespace osgEarth
             return _coverage->read(value, u, v);
         }
 
-        const T* read(unsigned s, unsigned t) const
-        {
-            OE_SOFT_ASSERT_AND_RETURN(_coverage != nullptr, nullptr);
-            return _coverage->read(s, t);
-        }
-
-        const T* read(double u, double v) const
-        {
-            OE_SOFT_ASSERT_AND_RETURN(_coverage != nullptr, nullptr);
-            return _coverage->read(u, v);
-        }
-
-        bool readAtCoords(T& value, double x, double y) const
-        {
-            unsigned xs = (unsigned)((double)(s()-1) * (x - _extent.xMin()) / _extent.width());
-            unsigned yt = (unsigned)((double)(t()-1) * (y - _extent.yMin()) / _extent.height());
-            if (xs >= 0 && xs < s() && yt >= 0 && yt < t())
-            {
-                read(value, xs, yt);
-                return true;
-            }
-            return false;
-        }
-
-        const GeoExtent& getExtent() const
-        {
-            return _extent;
-        }
-
     private:
         GeoExtent _extent;
-        bool _valid;
+        Status _status;
         typename Coverage<T>::Ptr _coverage;
     };
 }

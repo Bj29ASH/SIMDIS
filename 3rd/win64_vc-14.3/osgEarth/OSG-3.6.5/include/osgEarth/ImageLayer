@@ -296,14 +296,16 @@ namespace osgEarth
     class OSGEARTH_EXPORT FutureTexture
     {
     public:
-        virtual bool doneLoading() { update(); return _resolved; }
-        virtual bool succeeded() { update(); return _resolved && !_failed; }
-        virtual bool failed() { update(); return _resolved && _failed; }
+        virtual bool doneLoading() const { return _resolved; }
+        virtual bool succeeded() const { return _resolved && !_failed; }
+        virtual bool failed() const { return _resolved && _failed; }
+
+        virtual bool requiresUpdateCall() const = 0;
+        virtual void update(osg::NodeVisitor* nv) = 0;
 
     protected:
         FutureTexture() : _resolved(false), _failed(false) { }
         bool _resolved, _failed;
-        virtual void update() = 0;
     };
 
     class OSGEARTH_EXPORT FutureTexture2D :
@@ -315,10 +317,12 @@ namespace osgEarth
             ImageLayer* layer,
             const TileKey& key);
 
+    public: // FutureTexture
+        bool requiresUpdateCall() const override;
+        void update(osg::NodeVisitor* nv) override;
+
     protected:
         virtual ~FutureTexture2D() { }
-
-        void update() override;
 
     private:
         TileKey _key;

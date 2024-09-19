@@ -61,16 +61,6 @@ protected:
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-/// Define a screen location to display a popup
-enum class PopupLocation
-{
-  OVER_ENTITY = 0,
-  UPPER_LEFT,
-  LOWER_LEFT,
-  UPPER_RIGHT,
-  LOWER_RIGHT
-};
-
 /**
 * A entity mouse-over pop up control. Using the PopupHandler, you can
 * display this pop up when hovering the mouse over a entity in the scene.
@@ -103,14 +93,9 @@ public:
   void setPadding(int paddingPx);
   /// Sets the width between title and content
   void setChildSpacing(int spacingPx);
-  /// Sets the maximum width of the title and content
-  void setMaxWidth(int widthPx);
 
   /// Sets to show popup in the lower right corner of the view
-  SDK_DEPRECATE(void setShowInCorner(bool showInCorner),
-    "Use setPopupLocation instead.");
-  /// Define the location to display the popup
-  void setPopupLocation(PopupLocation location);
+  void setShowInCorner(bool showInCorner);
 
   /** Return the proper library name */
   virtual const char* libraryName() const { return "simVis"; }
@@ -155,7 +140,7 @@ private:
   int spacingPx_; ///< Vertical spacing (in pixels) between title and content labels
   float widthPx_; ///< Width (in pixels) of the popup based on current content
   float heightPx_; ///< Height (in pixels) of the popup based on current content
-  PopupLocation location_; ///< Location on screen to display popup
+  bool showInCorner_; ///< If true, popup is displayed in the bottom right corner
 };
 
 /**
@@ -212,8 +197,6 @@ public:
   void setPadding(int width);
   /// Sets the width between title and content
   void setChildSpacing(int width);
-  /// Sets the maximum width of the title and content
-  void setMaxWidth(int widthPx);
 
   /**
   * Sets a custom callback that will be used to generate the string
@@ -232,10 +215,7 @@ public:
   void setLimitVisibility(bool limit);
 
   /// Sets to show popup in the lower right corner of the view
-  SDK_DEPRECATE(void setShowInCorner(bool showInCorner),
-    "Use setPopupLocation instead.");
-  /// Define the location to display the popup
-  void setPopupLocation(PopupLocation location);
+  void setShowInCorner(bool showInCorner);
 
   /// Updates popup, depending on if mouse is over a platform in the current view
   void updatePopupFromView(simVis::View* currentView);
@@ -271,7 +251,7 @@ private:
   float lastMY_; ///< last stored mouse Y position, 0 is bottom
   bool mouseDirty_; ///< flag indicating if mouse was moved
   bool enabled_; ///< flag indicating if popup should draw
-  PopupLocation location_;
+  bool showInCorner_; ///< flag indicating if popup should display in lower right corner, otherwise displays at mouse
   bool limitVisibility_; ///< flag indicating if popup should only display for a limited time (as defined by duration_)
   int borderWidth_; ///< Width of the border in pixels; 0 to turn off
   simVis::Color borderColor_; ///< RGBA color for the outline of popup
@@ -283,7 +263,6 @@ private:
   int padding_; ///< Space between text and border
   int childSpacing_; ///< Space between title and content
   int duration_; ///< Duration in seconds popup should remain visible once shown
-  int maxWidth_; ///< Maximum width in pixels of the popup title and content
   double showStartTime_; ///< Time popup started being shown
   bool installed_; ///< True when the EntityPopup is installed in the view
 };

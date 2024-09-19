@@ -31,8 +31,6 @@
 
 namespace osgEarth
 {
-  class ArcGISTilePackageElevationLayer;
-  class ArcGISTilePackageImageLayer;
   class CachePolicy;
   class ElevationLayer;
   class GDALElevationLayer;
@@ -70,8 +68,6 @@ public:
   osgEarth::GDALImageLayer* newGdalImageLayer(const std::string& fullPath) const;
   /** Returns an image layer properly configured for MapboxGLImageLayer layer. */
   osgEarth::MapBoxGLImageLayer* newMapBoxGlImageLayer(const std::string& fullPath) const;
-  /** Returns an image layer properly configured for an ArcGIS image layer, given a conf.xml file. */
-  osgEarth::ArcGISTilePackageImageLayer* newArcGisTilePackageImageLayer(const std::string& confXmlPath) const;
 
   /** Returns an elevation layer properly configured for DB layer. May return nullptr if not configured with DB support. */
   simVis::DBElevationLayer* newDbElevationLayer(const std::string& fullPath) const;
@@ -79,8 +75,6 @@ public:
   osgEarth::MBTilesElevationLayer* newMbTilesElevationLayer(const std::string& fullPath) const;
   /** Returns an elevation layer properly configured for GDAL layer. */
   osgEarth::GDALElevationLayer* newGdalElevationLayer(const std::string& fullPath) const;
-  /** Returns an elevation layer properly configured for an ArcGIS elevation layer, given a conf.xml file. */
-  osgEarth::ArcGISTilePackageElevationLayer* newArcGisTilePackageElevationLayer(const std::string& confXmlPath) const;
 
   /** Retrieves the complete base name (e.g. "filename" for "c:/tmp/filename.db") of a URL */
   static std::string completeBaseName(const std::string& fullPath);

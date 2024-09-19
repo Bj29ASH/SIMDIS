@@ -28,6 +28,7 @@
 #include "simData/DataTypes.h"
 #include "simVis/Constants.h"
 #include "simVis/Entity.h"
+#include "simVis/LocatorNode.h"
 #include "simVis/SphericalVolume.h"
 
 namespace osg { class MatrixTransform; }
@@ -39,7 +40,6 @@ namespace simVis
   class EntityLabelNode;
   class LocalGridNode;
   class Locator;
-  class LocatorNode;
 
   /// Scene graph node representing the Beam volume
   class SDKVIS_EXPORT BeamVolume : public SphericalVolume

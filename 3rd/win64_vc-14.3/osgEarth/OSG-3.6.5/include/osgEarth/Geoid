@@ -25,11 +25,6 @@
 #include <osgEarth/Units>
 #include <osg/Referenced>
 
-namespace osg
-{
-    class HeightField;
-}
-
 namespace osgEarth
 {
     /**
